@@ -1,13 +1,17 @@
 package proyecto.NetSpider.entities;
 
 import java.util.ArrayList;
+
 enum OPERATIVE_SYSTEM {
     LINUX, WINDOWS
 }
+
 public class Node {
     private String ip;
     private String nodeName;
     private OPERATIVE_SYSTEM operativeSystem;
+    private boolean isLapsed = false;
+    //IMPLEMENTAR ATRIBUTO (INSTANTE EN EL QUE SE PROCESÓ LA IP)
     ArrayList<Port> ports;
 
 
@@ -21,10 +25,18 @@ public class Node {
         this.ports = ports;
     }
 
-    public Node (String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem) {
+    public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem) {
         this.ip = ip;
         this.nodeName = nodeName;
         this.operativeSystem = operativeSystem;
+    }
+
+    /**
+     * Analyze if the node is processed correctly
+     * @return true or false
+     */
+    public boolean isProcessed() {
+        return !ports.isEmpty() && !nodeName.isEmpty() && operativeSystem != null;
     }
 
     public String getIp() {
@@ -41,5 +53,29 @@ public class Node {
 
     public void setPorts(ArrayList<Port> ports) {
         this.ports = ports;
+    }
+
+    public String getNodeName() {
+        return nodeName;
+    }
+
+    public void setNodeName(String nodeName) {
+        this.nodeName = nodeName;
+    }
+
+    public OPERATIVE_SYSTEM getOperativeSystem() {
+        return operativeSystem;
+    }
+
+    public void setOperativeSystem(OPERATIVE_SYSTEM operativeSystem) {
+        this.operativeSystem = operativeSystem;
+    }
+
+    public boolean isLapsed() {
+        return isLapsed;
+    }
+
+    public void setLapsed(boolean lapsed) {
+        isLapsed = lapsed;
     }
 }
