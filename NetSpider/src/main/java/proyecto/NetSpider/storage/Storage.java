@@ -8,18 +8,18 @@ import java.util.concurrent.CopyOnWriteArrayList;
 
 
 // Clase almacén
-// Dificultad fácil
+// Dificultad medio
 public class Storage implements Migrable {
-    private CopyOnWriteArrayList<Node> nodes = new CopyOnWriteArrayList<>();
+    private static CopyOnWriteArrayList<Node> nodes = new CopyOnWriteArrayList<>();
 
     /**
-     * Method to import nodes to the class
+     * Method to import nodes
      *
      * @param nodes net nodes
      */
     @Override
     public void saveNodes(ArrayList<Node> nodes) {
-        // IMPLEMENTAR
+        addNodes(nodes);
     }
 
     /**
@@ -32,5 +32,22 @@ public class Storage implements Migrable {
     public ArrayList<Node> exportNodes() {
         // IMPLEMENTAR
         return null;
+    }
+
+    public static CopyOnWriteArrayList<Node> getNodes() {
+        return nodes;
+    }
+
+    public static void setNodes(CopyOnWriteArrayList<Node> nodes) {
+        Storage.nodes = nodes;
+    }
+
+    /**
+     * Add the nodes to the storage
+     * @param nodes
+     * @return
+     */
+    public static boolean addNodes(ArrayList<Node> nodes){
+        return nodes.addAll(nodes);
     }
 }
