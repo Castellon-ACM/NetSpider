@@ -2,6 +2,7 @@ package proyecto.NetSpider.processor;
 
 import proyecto.NetSpider.entities.Node;
 
+import java.io.File;
 import java.util.ArrayList;
 
 // PROCESADOR DE RESULTADOS. DEBE DE ESCRIBIR RESULTADOS EN UN FICHERO (hilo)
@@ -13,10 +14,15 @@ enum ProcessorMode {
     WriteRawIp
 }
 public class Processor {
-    
-    
-    public Processor(ArrayList<Node> nodes , ProcessorMode mode) {
-        
+
+    // hacer javadoc
+   public static void writeResults(ArrayList<Node> nodes , File file) {
+       // Writes the results with a new thread in the constructor
+       new ReportWriter(nodes, file);
+   }
+    public static void writeRawIp(ArrayList<Node> nodes , File file, char regex) {
+        // Writes the results with a new thread in the constructor
+        RawIpWriter.IpWriter(nodes,file,regex);
     }
 
 }
