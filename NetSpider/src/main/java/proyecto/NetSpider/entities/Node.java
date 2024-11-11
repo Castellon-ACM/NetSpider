@@ -1,6 +1,7 @@
 package proyecto.NetSpider.entities;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 enum OPERATIVE_SYSTEM {
     LINUX, WINDOWS
@@ -11,8 +12,10 @@ public class Node {
     private String nodeName;
     private OPERATIVE_SYSTEM operativeSystem;
     private boolean isLapsed = false;
-    //IMPLEMENTAR ATRIBUTO (INSTANTE EN EL QUE SE PROCESÓ LA IP)
+    private Date lastUpdate;
+    
     ArrayList<Port> ports;
+
 
 
     public Node(String ip) {
