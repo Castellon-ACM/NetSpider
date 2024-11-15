@@ -1,11 +1,10 @@
-package proyecto.NetSpider.storage;
+package main.proyecto.NetSpider.storage;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import proyecto.NetSpider.data_controller.Migrable;
-import proyecto.NetSpider.entities.Node;
-
+import main.proyecto.NetSpider.data_controller.Migrable;
+import main.proyecto.NetSpider.entities.Node;
 
 
 // Clase almacén

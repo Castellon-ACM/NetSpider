@@ -1,6 +1,6 @@
-package proyecto.NetSpider.processor;
+package main.proyecto.NetSpider.processor;
 
-import proyecto.NetSpider.entities.Node;
+import main.proyecto.NetSpider.entities.Node;
 
 import java.io.File;
 import java.io.FileWriter;

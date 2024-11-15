@@ -1,6 +1,6 @@
-package proyecto.NetSpider.processor;
+package main.proyecto.NetSpider.processor;
 
-import proyecto.NetSpider.entities.Node;
+import main.proyecto.NetSpider.entities.Node;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -33,5 +33,5 @@ public class ReportWriter extends Thread {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
+    } 
 }

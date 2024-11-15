@@ -1,4 +1,4 @@
-package proyecto.NetSpider.equilibrator.ip_extractor;
+package main.proyecto.NetSpider.equilibrator.ip_extractor;
 
 //EXTRACTOR DE IPS, ESCANEA LAS IPS DE LA RED
 // DIFICULTAD MEDIA

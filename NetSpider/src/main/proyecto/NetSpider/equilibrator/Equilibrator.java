@@ -1,7 +1,7 @@
-package proyecto.NetSpider.equilibrator;
+package main.proyecto.NetSpider.equilibrator;
 
-import proyecto.NetSpider.data_controller.Migrable;
-import proyecto.NetSpider.entities.Node;
+import main.proyecto.NetSpider.data_controller.Migrable;
+import main.proyecto.NetSpider.entities.Node;
 
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;

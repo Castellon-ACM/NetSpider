@@ -1,4 +1,4 @@
-package proyecto.NetSpider.config;
+package main.proyecto.NetSpider.config;
 // CONFIGURACIÓN DEL PROYECTO
 
 // TODO Singleton

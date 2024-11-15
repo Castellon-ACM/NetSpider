@@ -1,4 +1,4 @@
-package proyecto.NetSpider.entities;
+package main.proyecto.NetSpider.entities;
 
 import java.util.ArrayList;
 import java.util.Date;

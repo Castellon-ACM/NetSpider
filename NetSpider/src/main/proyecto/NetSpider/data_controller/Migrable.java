@@ -1,6 +1,6 @@
-package proyecto.NetSpider.data_controller;
+package main.proyecto.NetSpider.data_controller;
 
-import proyecto.NetSpider.entities.Node;
+import main.proyecto.NetSpider.entities.Node;
 
 import java.util.ArrayList;
 // Interfaz que deben de implementar almacen y equilibrador

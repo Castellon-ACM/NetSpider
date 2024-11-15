@@ -1,4 +1,4 @@
-package proyecto.NetSpider;
+package main.proyecto.NetSpider;
 
 public class Main {
     public static void main(String[] args) {
