@@ -13,5 +13,28 @@
         <maven.compiler.target>23</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
+    <dependencies>
+        <!-- JAXB API dependency -->
+        <dependency>
+            <groupId>jakarta.xml.bind</groupId>
+            <artifactId>jakarta.xml.bind-api</artifactId>
+            <version>4.0.0</version> <!-- Ensure the version is the latest -->
+        </dependency>
+
+        <!-- JAXB Runtime dependency -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>4.0.0</version> <!-- Ensure the version is the latest -->
+        </dependency>
+
+        <!-- Optional: JAXB Compiler (for generating Java classes from XML Schema) -->
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-xjc</artifactId>
+            <version>4.0.0</version>
+        </dependency>
+    </dependencies>
+
 
 </project>

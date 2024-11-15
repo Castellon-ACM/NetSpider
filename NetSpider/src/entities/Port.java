@@ -1,9 +1,16 @@
 package entities;
 
+import jakarta.xml.bind.annotation.XmlElement;
+import jakarta.xml.bind.annotation.XmlType;
+
+@XmlType(propOrder = {"portNumber", "service"})
 public class Port {
     private String portNumber;
     private Service service;
 
+    // Constructor sin argumentos requerido por JAXB
+    public Port() {
+    }
 
     public Port(String portNumber) {
         this.portNumber = portNumber;
@@ -14,6 +21,7 @@ public class Port {
         this.service = service;
     }
 
+    @XmlElement
     public String getPortNumber() {
         return portNumber;
     }
@@ -22,6 +30,7 @@ public class Port {
         this.portNumber = portNumber;
     }
 
+    @XmlElement
     public Service getService() {
         return service;
     }

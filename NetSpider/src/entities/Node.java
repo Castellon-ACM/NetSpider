@@ -1,5 +1,9 @@
 package entities;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -7,41 +11,28 @@ enum OPERATIVE_SYSTEM {
     LINUX, WINDOWS
 }
 
+@XmlRootElement(name = "Node")
+@XmlType(propOrder = {"ip", "nodeName", "operativeSystem", "isLapsed", "lastUpdate", "ports"})
 public class Node {
     private String ip;
     private String nodeName;
     private OPERATIVE_SYSTEM operativeSystem;
     private boolean isLapsed = false;
     private Date lastUpdate;
-    
-    ArrayList<Port> ports;
+    private ArrayList<Port> ports = new ArrayList<>();
 
 
-
-    public Node(String ip) {
-        this.ip = ip;
+    public Node() {
     }
 
-
-    public Node(String ip, ArrayList<Port> ports) {
-        this.ip = ip;
-        this.ports = ports;
-    }
-
-    public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem) {
+    public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem, Date lastUpdate) {
         this.ip = ip;
         this.nodeName = nodeName;
         this.operativeSystem = operativeSystem;
+        this.lastUpdate = lastUpdate;
     }
 
-    /**
-     * Analyze if the node is processed correctly
-     * @return true or false
-     */
-    public boolean isProcessed() {
-        return !ports.isEmpty() && !nodeName.isEmpty() && operativeSystem != null;
-    }
-
+    @XmlElement
     public String getIp() {
         return ip;
     }
@@ -50,14 +41,7 @@ public class Node {
         this.ip = ip;
     }
 
-    public ArrayList<Port> getPorts() {
-        return ports;
-    }
-
-    public void setPorts(ArrayList<Port> ports) {
-        this.ports = ports;
-    }
-
+    @XmlElement
     public String getNodeName() {
         return nodeName;
     }
@@ -66,6 +50,7 @@ public class Node {
         this.nodeName = nodeName;
     }
 
+    @XmlElement(name = "OperativeSystem")
     public OPERATIVE_SYSTEM getOperativeSystem() {
         return operativeSystem;
     }
@@ -74,11 +59,35 @@ public class Node {
         this.operativeSystem = operativeSystem;
     }
 
+    @XmlElement
     public boolean isLapsed() {
         return isLapsed;
     }
 
     public void setLapsed(boolean lapsed) {
         isLapsed = lapsed;
+    }
+
+    @XmlElement
+    public Date getLastUpdate() {
+        return lastUpdate;
+    }
+
+    public void setLastUpdate(Date lastUpdate) {
+        this.lastUpdate = lastUpdate;
+    }
+
+    @XmlElementWrapper(name = "Ports")
+    @XmlElement(name = "Port")
+    public ArrayList<Port> getPorts() {
+        return ports;
+    }
+
+    public void setPorts(ArrayList<Port> ports) {
+        this.ports = ports;
+    }
+
+    public void addPort(Port port) {
+        this.ports.add(port);
     }
 }
