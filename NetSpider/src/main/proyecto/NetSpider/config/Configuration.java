@@ -6,4 +6,7 @@ package main.proyecto.NetSpider.config;
 public class Configuration {
     // Expiration time of the scanned nodes in seconds
     public static int expirationTime = 50;
+    public static boolean verboseMode = true;
+
+    public static int processesVolume = 20;
 }
