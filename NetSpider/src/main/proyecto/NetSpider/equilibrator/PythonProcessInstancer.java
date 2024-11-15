@@ -13,5 +13,6 @@ public class PythonProcessInstancer extends Thread {
             processBuilders.add(builder);
         }
         Equilibrator.pythonProcesses.removeAll(processBuilders);
+        // SEGUIR IMPLEMENTANDO , DEBE DE COGER EL JSON DEL PROCESO Y CREAR UN NODE EN ProcessedQueue
     }
 }
