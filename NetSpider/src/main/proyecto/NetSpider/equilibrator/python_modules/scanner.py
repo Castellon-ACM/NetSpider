@@ -2,7 +2,7 @@ import socket
 import threading
 import subprocess
 import ports
-import os
+import platform
 # ME DAN IP. COMO SEGUNDO PARAMETRO QUIET O VERBOSE, CON QUIET DEVUELVE COSAS CON VERBOSE MAS COSAS.
 # PUERTOS ABIERTOS TCP, VERSION (80 ES HTTP), TECNOLOGIA, SISTEMA OPERATIVO.
 
@@ -14,8 +14,12 @@ class Scanner:
         
         self.ip = ip
         self.verbose = verbose
-        self.open_ports = []
+        self.open_ports = {}
         self.closed_ports = []
+        
+
+        self.operating_system = self.getOperatingSystem()
+
 
     def scan_port(self, port):
         try:
@@ -26,15 +30,20 @@ class Scanner:
             
             s.close()
 
-            self.open_ports.append(port)
+        
+
+            self.open_ports[port] = ports.PORT_SERVICE_MAP[port]
+            
+
         except:
+
             self.closed_ports.append(port)
 
     def scan_ports(self):
 
         threads = []
-
         for port in ports.PORT_SERVICE_MAP:
+
 
             t = threading.Thread(target=self.scan_port, args=(port,))
             threads.append(t)
@@ -45,34 +54,45 @@ class Scanner:
             t.join()
 
     def getOperatingSystem(self):
-
-        command = "ping -c 1 " + self.ip;
-        result = subprocess.check_output(command, shell=True, text=True)
-        ttlNumber = result.split("ttl=")[1].split(" ")[0]
-
-        if ttlNumber <= 70:
-            return "Linux"
+        ttlNumber = 0
+        if platform.system().lower() == "windows":
+            command = f"ping -n 1 {self.ip}"
         else:
-            return "Windows"
+            command = f"ping -c 1 {self.ip}"
+    
+        try:
+            result = subprocess.check_output(command, shell=True, text=True)
         
-    def getNameOnTheNetwork(self):
-        # Windows
+        # Buscar la primera línea que contiene TTL
 
-        if self.getOperatingSystem() == "Windows":
-            command = "nbtstat -A " + self.ip;
-            result = subprocess.check_output(command, shell=True, text=True)
-            return result.split(" ")[0]
-        else:
-            command = "nmblookup -A " + self.ip;
-            result = subprocess.check_output(command, shell=True, text=True)
-            return result.split(" ")[0]
+            for line in result.splitlines():
+                if "TTL=" in line.upper():
+                    ttlNumber = int(line.upper().split("TTL=")[1].split()[0])
+
+                    print(ttlNumber)
+
+                    if ttlNumber <= 70:
+                        return "Linux"
+                    else:
+                        return "Windows"
+                
+            return "Undetermined"
+        
+        except subprocess.CalledProcessError:
+            return "NotReachable"
+        except Exception as e:
+            return f"Error: {str(e)}"
+
         
 
     def scan(self):
         self.scan_ports()
         if self.verbose:
             print(f"Open ports: {self.open_ports}")
-            print(f"Closed ports: {self.closed_ports}")
+            print(f"Operating System: {self.operating_system}")
+
+            ## print(f"Closed ports: {self.closed_ports}")
+
         else:
             print(f"Open ports: {self.open_ports}")
 
@@ -96,14 +116,10 @@ class Scanner:
 
 
 def main():
+
     ip = "192.168.1.151"
-    scanner = Scanner(ip, verbose=False)
+    scanner = Scanner(ip, verbose=True)
     scanner.scan()
-
-    print(scanner.get_open_ports())
    
- 
-
-
 main()
      
