@@ -1,11 +1,11 @@
-package main.proyecto.NetSpider.processor;
-
-import main.proyecto.NetSpider.entities.Node;
+package processor;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+
+import entities.Node;
 
 public class ReportWriter extends Thread {
 

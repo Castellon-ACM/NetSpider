@@ -1,9 +1,9 @@
-package main.proyecto.NetSpider.processor;
-
-import main.proyecto.NetSpider.entities.Node;
+package processor;
 
 import java.io.File;
 import java.util.ArrayList;
+
+import entities.Node;
 
 // PROCESADOR DE RESULTADOS. DEBE DE ESCRIBIR RESULTADOS EN UN FICHERO (hilo)
 // También tiene que tener un método estático para escribir ips en un fichero , separadas por algún tipo de regex

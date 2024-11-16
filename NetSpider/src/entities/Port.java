@@ -1,4 +1,4 @@
-package main.proyecto.NetSpider.entities;
+package entities;
 
 public class Port {
     private String portNumber;

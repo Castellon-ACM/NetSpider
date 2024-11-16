@@ -1,16 +1,23 @@
-package main.proyecto.NetSpider.equilibrator;
-import main.proyecto.NetSpider.config.Configuration;
-import main.proyecto.NetSpider.data_controller.Migrable;
-import main.proyecto.NetSpider.entities.Node;
+package equilibrator;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
+
+import config.ConfigurationSingleton;
+import data_controller.Migrable;
+import entities.Node;
 
 interface Arguments {
     public final String QUIET = "--quiet";
     public final String VERBOSE = "--verbose";
 }
+
 public class Equilibrator extends Thread implements Migrable,Arguments{
+
+    // Get Instance of ConfigurationSingleton
+
+    ConfigurationSingleton Configuration = ConfigurationSingleton.getInstance();
 
     protected final File pythonScript = new File("./python_modules/scanner.py");
 
@@ -32,7 +39,7 @@ public class Equilibrator extends Thread implements Migrable,Arguments{
      */
     public void clearAndPrepareQueue() {
         for (Node node : ProcessQueue) {
-            String currentArguments = (Configuration.verboseMode) ? Arguments.VERBOSE : Arguments.QUIET;
+            String currentArguments = (Configuration.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
             pythonProcesses.add(new ProcessBuilder("python", pythonScript.getAbsolutePath(),
                     node.getIp(),currentArguments));
         }

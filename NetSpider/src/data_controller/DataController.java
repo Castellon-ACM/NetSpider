@@ -1,8 +1,8 @@
-package main.proyecto.NetSpider.data_controller;
-
-import main.proyecto.NetSpider.entities.Node;
+package data_controller;
 
 import java.util.ArrayList;
+
+import entities.Node;
 
 // CONTROLADOR DE DATOS
 // DIFICULTAD DIFICIL

@@ -1,14 +1,21 @@
-package main.proyecto.NetSpider.equilibrator;
-
-import main.proyecto.NetSpider.config.Configuration;
+package equilibrator;
 
 import java.util.ArrayList;
 
+import config.ConfigurationSingleton;
+
 public class PythonProcessInstancer extends Thread {
+
+
+    // Get Instance of ConfigurationSingleton
+
+    ConfigurationSingleton Configuration = ConfigurationSingleton.getInstance();
+
+
     @Override
     public void run() {
         ArrayList<ProcessBuilder> processBuilders = new ArrayList<>();
-        for (int i = 0; i < Configuration.processesVolume; i++) {
+        for (int i = 0; i < Configuration.getProcessesVolume(); i++) {
             ProcessBuilder builder = Equilibrator.pythonProcesses.get(i);
             processBuilders.add(builder);
         }
