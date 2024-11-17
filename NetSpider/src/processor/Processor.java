@@ -20,9 +20,6 @@ public class Processor {
        // Writes the results with a new thread in the constructor
        new ReportWriter(nodes, file);
    }
-    public static void writeRawIp(ArrayList<Node> nodes , File file, char regex) {
-        // Writes the results with a new thread in the constructor
-        RawIpWriter.IpWriter(nodes,file,regex);
-    }
+
 
 }
