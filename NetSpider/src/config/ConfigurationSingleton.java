@@ -9,6 +9,8 @@ public class ConfigurationSingleton {
     private int expirationTime;
     private boolean verboseMode;
     private int processesVolume;
+    private double maxCpuLoad;
+    private int threadSleepPythonInstancer;
     private String asciiArt = """
             
              ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡖⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -34,6 +36,8 @@ public class ConfigurationSingleton {
         this.expirationTime = 50;
         this.verboseMode = true;
         this.processesVolume = 20;
+        this.maxCpuLoad = 80;
+        this.threadSleepPythonInstancer = 1000;
 
     }
 
@@ -78,5 +82,11 @@ public class ConfigurationSingleton {
         this.asciiArt = asciiArt;
     }
 
-  
+    public double getMaxCpuLoad() {
+        return maxCpuLoad;
+    }
+
+    public int getThreadSleepPythonInstancer() {
+        return threadSleepPythonInstancer;
+    }
 }
