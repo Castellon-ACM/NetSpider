@@ -25,8 +25,9 @@ public class XMLToPDF {
 
 
     /**
-     * @param xmlFile
-     * @param pdfFile
+     * Constructor
+     * @param xmlFile Destination XML file
+     * @param pdfFile Destination PDF file
      */
     public XMLToPDF(File xmlFile, File pdfFile) {
         this.xmlFile = xmlFile;

@@ -18,7 +18,7 @@ public class Processor {
     // hacer javadoc
    public static void writeResults(ArrayList<Node> nodes , File file) {
        // Writes the results with a new thread in the constructor
-       new ReportWriter(nodes, file);
+       new ReportWriter(nodes, file, file);
    }
 
 

@@ -14,33 +14,34 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 
 public class ReportWriter extends Thread {
-    /**
-     * Create ArrayList
-     */
     private ArrayList<Node> nodes = new ArrayList<>();
-    private File file;
+    private File xmlFile;
+    private File pdfFile;
 
     /**
-     * Write the scan results into a file asynchronously
+     * Constructor.
      * @param nodes List of nodes to write
-     * @param file Destination file
+     * @param xmlFile Destination XML file
+     * @param pdfFile Destination PDF file
      */
-    public ReportWriter(ArrayList<Node> nodes, File file) {
+    public ReportWriter(ArrayList<Node> nodes, File xmlFile, File pdfFile) {
         this.nodes = nodes;
-        this.file = file;
+        this.xmlFile = xmlFile;
+        this.pdfFile = pdfFile;
         if (!nodes.isEmpty()) this.start();
     }
 
     @Override
     public void run() {
         writeNodesToFile();
+        generatePDFReport();
     }
 
     /**
      * Writes the list of nodes to the file in XML format.
      */
     private void writeNodesToFile() {
-        try (FileWriter writer = new FileWriter(file)) {
+        try (FileWriter writer = new FileWriter(xmlFile)) {
 
             JAXBContext context = JAXBContext.newInstance(Node.class, Port.class, Service.class);
             Marshaller marshaller = context.createMarshaller();
@@ -57,6 +58,20 @@ public class ReportWriter extends Thread {
 
         } catch (IOException | JAXBException e) {
             throw new RuntimeException("Error al escribir el archivo XML", e);
+        }
+    }
+
+    /**
+     * Generates a PDF report from the XML file.
+     */
+    private void generatePDFReport() {
+        try {
+            XMLToPDF converter = new XMLToPDF(xmlFile, pdfFile);
+            converter.generatePDF();
+
+            System.out.println("PDF generado exitosamente en: " + pdfFile.getAbsolutePath());
+        } catch (Exception e) {
+            throw new RuntimeException("Error al generar el archivo PDF", e);
         }
     }
 }
