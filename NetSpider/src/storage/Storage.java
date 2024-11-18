@@ -1,11 +1,8 @@
 package storage;
-
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import data_controller.Migrable;
 import entities.Node;
-
 
 // Clase almacén
 // Dificultad medio
@@ -30,12 +27,15 @@ public class Storage implements Migrable {
      */
     @Override
     public ArrayList<Node> exportNodes() {
-        // IMPLEMENTAR
-        return null;
+        return new ArrayList<>(nodes);
     }
 
-    public static CopyOnWriteArrayList<Node> getNodes() {
-        return nodes;
+        public static ArrayList<Node> getLapsedNodes() {
+        ArrayList<Node> lapsedNodes = new ArrayList<>();
+        for (Node node : nodes) {
+            if (node.isLapsed())  lapsedNodes.add(node);
+        }
+        return lapsedNodes;
     }
 
     public static void setNodes(CopyOnWriteArrayList<Node> nodes) {
