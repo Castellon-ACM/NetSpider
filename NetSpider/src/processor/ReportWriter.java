@@ -31,12 +31,15 @@ public class ReportWriter extends Thread {
         if (!nodes.isEmpty()) this.start();
     }
 
-    /**
-     * Create JAXB and marshaller
-     * Write nodes in the file with spaces
-     */
     @Override
     public void run() {
+        writeNodesToFile();
+    }
+
+    /**
+     * Writes the list of nodes to the file in XML format.
+     */
+    private void writeNodesToFile() {
         try (FileWriter writer = new FileWriter(file)) {
 
             JAXBContext context = JAXBContext.newInstance(Node.class, Port.class, Service.class);
