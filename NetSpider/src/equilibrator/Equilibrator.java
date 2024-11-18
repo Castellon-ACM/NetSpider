@@ -1,11 +1,10 @@
 package equilibrator;
-
 import java.io.File;
-import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 import config.ConfigurationSingleton;
-import data_controller.Migrable;
 import entities.Node;
 
 interface Arguments {
@@ -13,11 +12,11 @@ interface Arguments {
     public final String VERBOSE = "--verbose";
 }
 
-public class Equilibrator extends Thread implements Migrable,Arguments{
+public class Equilibrator extends Thread implements Arguments{
 
     // Get Instance of ConfigurationSingleton
 
-    ConfigurationSingleton Configuration = ConfigurationSingleton.getInstance();
+    private final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
 
     protected final File pythonScript = new File("./python_modules/scanner.py");
 
@@ -30,43 +29,33 @@ public class Equilibrator extends Thread implements Migrable,Arguments{
     // QUEUE OF PROCESSED NODES
     public static CopyOnWriteArrayList<Node> ProcessedQueue = new CopyOnWriteArrayList<>();
 
+    private ExecutorService executor = Executors.newFixedThreadPool(CONFIG.getPythonProcessInstancersThreads());
+
     public Equilibrator() {
 
+    }
+
+    @Override
+    public void run() {
+        // TODO: Implement logic to clear and prepare queue
     }
 
     /**
      * Clears the ProcessQueue and creates the pythonProcesses queue
      */
-    public void clearAndPrepareQueue() {
+    private void clearAndPrepareQueue() {
         for (Node node : ProcessQueue) {
-            String currentArguments = (Configuration.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
+            String currentArguments = (CONFIG.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
             pythonProcesses.add(new ProcessBuilder("python", pythonScript.getAbsolutePath(),
                     node.getIp(),currentArguments));
         }
         ProcessQueue.clear();
     }
 
-
-
-    /**
-     * Method to import nodes to the class
-     *
-     * @param nodes net nodes
-     */
-    @Override
-    public void saveNodes(ArrayList<Node> nodes) {
-        // IMPLEMENTAR
-    }
-
-    /**
-     * Method to export nodes.
-     * It returns the nodes in the CopyOnWriteArrayList
-     *
-     * @return nodes
-     */
-    @Override
-    public ArrayList<Node> exportNodes() {
-        // IMPLEMENTAR
-        return null;
+    private void startInstacers() {
+        if (!pythonProcesses.isEmpty()) {
+            executor.execute(new PythonProcessInstancer());
+            // TODO: Implement logic to check if all python processes have completed
+        }
     }
 }
