@@ -23,10 +23,19 @@ public class XMLToPDF {
     private File xmlFile;
     private File pdfFile;
 
+
+    /**
+     * @param xmlFile
+     * @param pdfFile
+     */
     public XMLToPDF(File xmlFile, File pdfFile) {
         this.xmlFile = xmlFile;
         this.pdfFile = pdfFile;
     }
+
+    /**
+     * Generate PDF and do format
+     */
 
     public void generatePDF() throws IOException, JAXBException {
 
@@ -82,6 +91,10 @@ public class XMLToPDF {
 
         document.close();
     }
+
+    /**
+     * Read XML with Unmarshaller
+     */
 
     private ArrayList<Node> readNodesFromXML() throws JAXBException {
         ArrayList<Node> nodes = new ArrayList<>();
