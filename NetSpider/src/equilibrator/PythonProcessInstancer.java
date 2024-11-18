@@ -8,6 +8,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import config.ConfigurationSingleton;
+import processor.PythonOutputParser;
 
 public class PythonProcessInstancer extends Thread {
 
@@ -52,26 +53,14 @@ public class PythonProcessInstancer extends Thread {
     private void processInstancer(ProcessBuilder builder) {
         try {
             Process process = builder.start();
-            StringBuilder output = outputReader(process);
-            // Process the output and create a node in ProcessedQueue
-            // Use pythonOutputParser to parse the JSON and create a node in ProcessedQueue
+            // NEW THREAD TO PROCESS THE OUTPUT OF THE PYTHON PROCESS
+            new PythonOutputParser(process).start();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private StringBuilder outputReader(Process process) {
-        StringBuilder builder = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-        return builder;
-    }
+
 }
 
 
