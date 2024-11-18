@@ -10,7 +10,6 @@ enum OPERATIVE_SYSTEM {
     LINUX, WINDOWS
 }
 
-
 @XmlRootElement(name = "Node")
 @XmlType(propOrder = {"ip", "nodeName", "operativeSystem", "isLapsed", "lastUpdate", "ports"})
 public class Node {
