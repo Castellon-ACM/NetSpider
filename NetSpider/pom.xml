@@ -34,6 +34,13 @@
             <artifactId>jaxb-xjc</artifactId>
             <version>4.0.0</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itext7-core</artifactId>
+            <version>8.0.5</version>
+        </dependency>
+
     </dependencies>
 
 
