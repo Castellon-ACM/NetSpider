@@ -25,6 +25,8 @@ public class PythonProcessInstancer extends Thread {
         }
         if (!processBuilders.isEmpty()) {
             Equilibrator.pythonProcesses.removeAll(processBuilders);
+            // We use a scheduled executor to run the checkAndProcessBuilders method periodically
+            // This ensures that the Python processes are only started when the CPU load is below the maximum allowed value
             scheduler.scheduleAtFixedRate(this::checkAndProcessBuilders, 0,
                     Configuration.getThreadSleepPythonInstancer(), TimeUnit.MILLISECONDS);
         }
