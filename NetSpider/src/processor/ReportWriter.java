@@ -14,7 +14,9 @@ import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
 
 public class ReportWriter extends Thread {
-
+    /**
+     * Create ArrayList
+     */
     private ArrayList<Node> nodes = new ArrayList<>();
     private File file;
 
@@ -29,6 +31,10 @@ public class ReportWriter extends Thread {
         if (!nodes.isEmpty()) this.start();
     }
 
+    /**
+     * Create JAXB and marshaller
+     * Write nodes in the file with spaces
+     */
     @Override
     public void run() {
         try (FileWriter writer = new FileWriter(file)) {
