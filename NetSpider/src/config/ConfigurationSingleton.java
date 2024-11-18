@@ -6,7 +6,7 @@ public class ConfigurationSingleton {
 
     private static ConfigurationSingleton instance = null;
 
-    private int expirationTime;
+    private int expirationTime; // In seconds
     private boolean verboseMode;
     private int processesVolume;
     private double maxCpuLoad;

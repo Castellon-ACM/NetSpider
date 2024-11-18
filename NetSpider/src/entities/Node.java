@@ -4,6 +4,7 @@ import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 
 enum OPERATIVE_SYSTEM {
@@ -29,6 +30,10 @@ public class Node {
         this.nodeName = nodeName;
         this.operativeSystem = operativeSystem;
         this.lastUpdate = lastUpdate;
+    }
+
+    public void updateLastProcessedTime() {
+        this.lastUpdate = Calendar.getInstance().getTime();
     }
 
     @XmlElement
