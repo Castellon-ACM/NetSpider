@@ -37,7 +37,6 @@ public class XMLToPDF {
     /**
      * Generate PDF and do format
      */
-
     public void generatePDF() throws IOException, JAXBException {
         ArrayList<Node> nodes = readNodesFromXML();
         PdfWriter writer = new PdfWriter(pdfFile);
@@ -50,7 +49,9 @@ public class XMLToPDF {
 
         document.close();
     }
-
+    /**
+     * Method to add the title in the PDF
+     */
     private void addTitle(Document document) {
         document.add(new Paragraph("Reporte de Escaneo")
                 .setBold()
@@ -58,7 +59,9 @@ public class XMLToPDF {
                 .setFontColor(ColorConstants.BLUE)
                 .setMarginBottom(20));
     }
-
+    /**
+     * Iterates over the nodes and passes them to specific methods
+     */
     private void addNodesContent(Document document, ArrayList<Node> nodes) {
         for (Node node : nodes) {
             addNodeHeader(document, node);
@@ -66,14 +69,18 @@ public class XMLToPDF {
             addPortsTable(document, node);
         }
     }
-
+    /**
+     * Method to add the node header
+     */
     private void addNodeHeader(Document document, Node node) {
         document.add(new Paragraph("Nodo: " + node.getNodeName())
                 .setBold()
                 .setFontSize(14)
                 .setFontColor(ColorConstants.DARK_GRAY));
     }
-
+    /**
+     * Method to add the node details
+     */
     private void addNodeDetails(Document document, Node node) {
         document.add(new Paragraph("IP: " + node.getIp()));
         document.add(new Paragraph("Sistema Operativo: " + node.getOperativeSystem()));
@@ -81,7 +88,9 @@ public class XMLToPDF {
         document.add(new Paragraph("Estado: " + (node.isLapsed() ? "Lapsado" : "Activo"))
                 .setMarginBottom(10));
     }
-
+    /**
+     * Method to add a table with all the ports
+     */
     private void addPortsTable(Document document, Node node) {
         Table table = new Table(new float[]{2, 4, 4});
 
@@ -98,7 +107,9 @@ public class XMLToPDF {
 
         document.add(table.setMarginBottom(20));
     }
-
+    /**
+     * Method to add the footer in PDF
+     */
     private void addFooter(Document document) {
         document.add(new Paragraph("PDF generado automáticamente")
                 .setFontColor(ColorConstants.GRAY)
