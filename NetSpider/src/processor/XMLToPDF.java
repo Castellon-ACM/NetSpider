@@ -37,6 +37,7 @@ public class XMLToPDF {
     /**
      * Generate PDF and do format
      */
+
     public void generatePDF() throws IOException, JAXBException {
         ArrayList<Node> nodes = readNodesFromXML();
         PdfWriter writer = new PdfWriter(pdfFile);
@@ -105,6 +106,7 @@ public class XMLToPDF {
                 .setTextAlignment(com.itextpdf.layout.properties.TextAlignment.CENTER)
                 .setMarginTop(20));
     }
+
 
     /**
      * Read XML with Unmarshaller
