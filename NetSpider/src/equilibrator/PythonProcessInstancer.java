@@ -1,8 +1,6 @@
 package equilibrator;
 import cpu.UtilsCpu;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -17,17 +15,21 @@ public class PythonProcessInstancer extends Thread {
     private ArrayList<ProcessBuilder> processBuilders;
 
     @Override
-    public void run() {
+       public void run() {
         processBuilders = new ArrayList<>();
-        for (int i = 0; i < Configuration.getProcessesVolume(); i++) {
+        int i = 0;
+        while (i < Configuration.getProcessesVolume() && i < Equilibrator.pythonProcesses.size()) {
             ProcessBuilder builder = Equilibrator.pythonProcesses.get(i);
             processBuilders.add(builder);
+            i++;
         }
-        Equilibrator.pythonProcesses.removeAll(processBuilders);
-        // We use a scheduled executor to run the checkAndProcessBuilders method periodically
-        // This ensures that the Python processes are only started when the CPU load is below the maximum allowed value
-        scheduler.scheduleAtFixedRate(this::checkAndProcessBuilders, 0,
-                Configuration.getThreadSleepPythonInstancer(), TimeUnit.MILLISECONDS);
+        if (!processBuilders.isEmpty()) {
+            Equilibrator.pythonProcesses.removeAll(processBuilders);
+            // We use a scheduled executor to run the checkAndProcessBuilders method periodically
+            // This ensures that the Python processes are only started when the CPU load is below the maximum allowed value
+            scheduler.scheduleAtFixedRate(this::checkAndProcessBuilders, 0,
+                    Configuration.getThreadSleepPythonInstancer(), TimeUnit.MILLISECONDS);
+        }
     }
 
     /**
