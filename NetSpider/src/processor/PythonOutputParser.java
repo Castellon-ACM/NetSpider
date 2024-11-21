@@ -28,6 +28,24 @@ public class PythonOutputParser extends Thread {
             StringBuilder output = outputReader(pythonProcess);
             // AQUI SE DEBE USAR EL JSON QUE RECIBIO EL JEFE FELIX Y CONVERTIRLO A UN OBJETO NODE
 
+            // OUTPUT ES EL JSON
+
+
+
+            /*
+             
+            {
+    "ip": "192.168.1.151",
+    "open_ports": {
+        "80": "http"
+    },
+    "closed_ports": 990,
+    "operating_system": "NotReachable"
+}
+             
+
+             */
+
             
 
             // LUEGO DE CONVERTIRLO SE GUARDA EN EL PROCESSED QUEUE DEL EQUILIBRATOR

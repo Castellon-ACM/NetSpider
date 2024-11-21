@@ -31,6 +31,8 @@ public class Node {
         this.nodeName = nodeName;
         this.operativeSystem = operativeSystem;
         this.lastUpdate = lastUpdate;
+        
+
     }
 
     public void updateLastProcessedTime() {
