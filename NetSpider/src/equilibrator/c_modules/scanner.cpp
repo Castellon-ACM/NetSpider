@@ -19,11 +19,16 @@
 MainScanner::MainScanner()
     : portServiceMap(PORT_SERVICE_MAP) {} // inicio el mapa
 
-void MainScanner::scanPort(int port) {
+void MainScanner::scan(int ip) {
     
 
 
 
+}
+
+int main() {
+    // Printeo hola
+    std::cout << "Hola" << std::endl;
 }
 
 
