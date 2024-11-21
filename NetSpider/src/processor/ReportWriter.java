@@ -4,11 +4,11 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
+import java.security.Provider;
 import java.util.ArrayList;
 
 import entities.Node;
 import entities.Port;
-import entities.Service;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
@@ -43,7 +43,7 @@ public class ReportWriter extends Thread {
     private void writeNodesToFile() {
         try (FileWriter writer = new FileWriter(xmlFile)) {
 
-            JAXBContext context = JAXBContext.newInstance(Node.class, Port.class, Service.class);
+            JAXBContext context = JAXBContext.newInstance(Node.class, Port.class);
             Marshaller marshaller = context.createMarshaller();
 
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);

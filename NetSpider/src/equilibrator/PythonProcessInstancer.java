@@ -14,6 +14,8 @@ public class PythonProcessInstancer extends Thread {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private ArrayList<ProcessBuilder> processBuilders;
 
+
+
     @Override
        public void run() {
         processBuilders = new ArrayList<>();
@@ -55,7 +57,7 @@ public class PythonProcessInstancer extends Thread {
     private void processInstancer(ProcessBuilder builder) {
         try {
             Process process = builder.start();
-            // NEW THREAD TO PROCESS THE OUTPUT OF THE PYTHON PROCESS
+            // TODO : Process the output of the Python process using a separate thread
             new PythonOutputParser(process).start();
         } catch (IOException e) {
             e.printStackTrace();
