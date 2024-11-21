@@ -27,7 +27,7 @@ NetSpider is a high-performance network scanner that continuously monitors the n
 
 ## 🛠️ Technology Stack
 
-- **Java:** ☕ Main program for orchestrating the scanning process, managing threads, and generating PDF reports.  
+- **Java:** ☕ Main program for control the scanning process, managing threads, and generating PDF reports.  
 
 - **C++:** 🛠️ High-speed module for port scanning and service detection.
   
