@@ -24,6 +24,7 @@ public class Node {
 
 
     public Node() {
+
     }
 
     public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem, Date lastUpdate) {
@@ -31,9 +32,12 @@ public class Node {
         this.nodeName = nodeName;
         this.operativeSystem = operativeSystem;
         this.lastUpdate = lastUpdate;
-        
+
+
 
     }
+
+    
 
     public void updateLastProcessedTime() {
         this.lastUpdate = Calendar.getInstance().getTime();

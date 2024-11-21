@@ -8,11 +8,10 @@
 // declaro
 class PortScanner {
 public:
-
-   
     
     PortScanner(const std::string& ipAddress) : ip(ipAddress), portServiceMap(PORT_SERVICE_MAP) {
     operating_system = getOperatingSystem();
+
 }
 
     void scan() {
@@ -28,6 +27,7 @@ public:
 
     std::unordered_map<int, std::string> getOpenPorts() const {
         return open_ports;
+        
     }
 
     int getClosedPorts() const {
@@ -90,7 +90,8 @@ private:
         sockaddr_in server; // Guarda info del server
         server.sin_family = AF_INET; // af inet (IPV4 BLOSTE)
         server.sin_port = htons(port); //htons (NUMERO DE BLOSTES DEL PUERTO)
-        inet_pton(AF_INET, ip.c_str(), &server.sin_addr); // Converts the ip to
+        inet_pton(AF_INET, ip.c_str(), &server.sin_addr); 
+        // Converts the ip to
         // a binary so it can be saved in the sin address.
 
         // en el inet, se mete el protocolo ipv4, luego se pasa a string la ip,
