@@ -1,23 +1,24 @@
 package processor;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+
 import entities.Node;
 import entities.Port;
 import entities.Service;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
-import com.itextpdf.kernel.colors.ColorConstants;
-import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfWriter;
-import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.element.Cell;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 
 public class XMLToPDF {
     private File xmlFile;
@@ -54,10 +55,11 @@ public class XMLToPDF {
      */
     private void addTitle(Document document) {
         document.add(new Paragraph("Reporte de Escaneo")
-                .setBold()
                 .setFontSize(18)
                 .setFontColor(ColorConstants.BLUE)
+                .simulateBold()
                 .setMarginBottom(20));
+
     }
     /**
      * Iterates over the nodes and passes them to specific methods
@@ -74,7 +76,7 @@ public class XMLToPDF {
      */
     private void addNodeHeader(Document document, Node node) {
         document.add(new Paragraph("Nodo: " + node.getNodeName())
-                .setBold()
+                .simulateBold()
                 .setFontSize(14)
                 .setFontColor(ColorConstants.DARK_GRAY));
     }
@@ -94,9 +96,9 @@ public class XMLToPDF {
     private void addPortsTable(Document document, Node node) {
         Table table = new Table(new float[]{2, 4, 4});
 
-        table.addHeaderCell(new Cell().add(new Paragraph("Puerto").setBold()));
-        table.addHeaderCell(new Cell().add(new Paragraph("Servicio").setBold()));
-        table.addHeaderCell(new Cell().add(new Paragraph("Descripción").setBold()));
+        table.addHeaderCell(new Cell().add(new Paragraph("Puerto").simulateBold()));
+        table.addHeaderCell(new Cell().add(new Paragraph("Servicio").simulateBold()));
+        table.addHeaderCell(new Cell().add(new Paragraph("Descripción").simulateBold()));
 
         for (Port port : node.getPorts()) {
             table.addCell(port.getPortNumber());
