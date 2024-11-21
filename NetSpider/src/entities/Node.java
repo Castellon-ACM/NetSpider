@@ -1,13 +1,12 @@
 package entities;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 
 enum OPERATIVE_SYSTEM {
     LINUX, WINDOWS
@@ -21,7 +20,7 @@ public class Node {
     private OPERATIVE_SYSTEM operativeSystem;
     private boolean isLapsed = false;
     private Date lastUpdate;
-    private HashMap<String, Port> ports = new HashMap<>();
+    private ArrayList<Port> ports = new ArrayList<>();
 
 
     public Node() {
