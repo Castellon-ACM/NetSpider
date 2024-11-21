@@ -4,6 +4,8 @@
     "files.associations": {
         "*.css": "css",
         "css": "css",
-        "cstring": "cpp"
+        "cstring": "cpp",
+        "string": "cpp",
+        "unordered_map": "cpp"
     }
 }

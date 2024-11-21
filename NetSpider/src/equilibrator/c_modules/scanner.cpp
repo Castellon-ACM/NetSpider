@@ -12,23 +12,26 @@
 #include <netdb.h>
 
 #include "scanner.h"
-#include "ports.h"
 
-
-
-MainScanner::MainScanner()
-    : portServiceMap(PORT_SERVICE_MAP) {} // inicio el mapa
-
-void MainScanner::scan(int ip) {
-    
-
-
-
-}
 
 int main() {
-    // Printeo hola
-    std::cout << "Hola" << std::endl;
+    // Crear el scanner con una IP
+    PortScanner scanner("192.168.1.145"); // O la IP que desees escanear
+    
+    // Ejecutar el escaneo
+    scanner.scan();
+    
+    // Opcional: obtener y mostrar los resultados
+    auto openPorts = scanner.getOpenPorts();
+    for (const auto& port : openPorts) {
+        std::cout << "Puerto " << port.first << " abierto - Servicio: " 
+                 << port.second << std::endl;
+    }
+    
+    std::cout << "Puertos cerrados: " << scanner.getClosedPorts() << std::endl;
+    std::cout << "Sistema operativo detectado: " << scanner.getOperatingSystemX() << std::endl;
+
+    return 0;
 }
 
 
