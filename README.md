@@ -28,12 +28,12 @@ NetSpider is a high-performance network scanner that continuously monitors the n
 ## 🛠️ Technology Stack
 
 - **Java:** ☕ Main program for orchestrating the scanning process, managing threads, and generating PDF reports.  
-![Java](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg)
 
-- **C++:** 🛠️ High-speed module for port scanning and service detection.  
-![C++](https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg)
-
----
+- **C++:** 🛠️ High-speed module for port scanning and service detection.
+  
+<div align="center">
+<img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" alt="Java Logo" width="50"/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++ Logo" width="50"/>
+</div>
 
 ## 🌟 Use Cases
 
