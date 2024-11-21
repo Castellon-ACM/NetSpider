@@ -15,7 +15,6 @@ import com.itextpdf.layout.element.Table;
 
 import entities.Node;
 import entities.Port;
-import entities.Service;
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Unmarshaller;
