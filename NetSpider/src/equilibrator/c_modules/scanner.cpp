@@ -15,10 +15,18 @@
 #include "ports.h"
 
 
+
 MainScanner::MainScanner()
     : portServiceMap(PORT_SERVICE_MAP) {} // inicio el mapa
 
+void MainScanner::scanPort(int port) {
     
+
+
+
+}
+
+
 
 
 

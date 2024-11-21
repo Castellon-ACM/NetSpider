@@ -1,4 +1,9 @@
 {
     "java.configuration.updateBuildConfiguration": "automatic",
-    "maven.view": "flat"
+    "maven.view": "flat",
+    "files.associations": {
+        "*.css": "css",
+        "css": "css",
+        "cstring": "cpp"
+    }
 }
