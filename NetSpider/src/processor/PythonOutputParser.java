@@ -27,6 +27,9 @@ public class PythonOutputParser extends Thread {
         if (pythonProcess != null) {
             StringBuilder output = outputReader(pythonProcess);
             // AQUI SE DEBE USAR EL JSON QUE RECIBIO EL JEFE FELIX Y CONVERTIRLO A UN OBJETO NODE
+
+            
+
             // LUEGO DE CONVERTIRLO SE GUARDA EN EL PROCESSED QUEUE DEL EQUILIBRATOR
             // SI EL OUTPUT ES NULO, SE DEBE DETENER EL PROCESO
             // SI EL OUTPUT ES NO NULO, SE DEBE CREAR UN NUEVO NODE Y GUARDARLO EN EL PROCESSED QUEUE DEL EQUILIBRATOR

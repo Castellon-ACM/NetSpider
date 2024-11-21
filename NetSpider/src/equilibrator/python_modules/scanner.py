@@ -1,12 +1,12 @@
+import re
 import socket
 import threading
 import subprocess
 import ports
 import platform
+import json
 # ME DAN IP. COMO SEGUNDO PARAMETRO QUIET O VERBOSE, CON QUIET DEVUELVE COSAS CON VERBOSE MAS COSAS.
 # PUERTOS ABIERTOS TCP, VERSION (80 ES HTTP), TECNOLOGIA, SISTEMA OPERATIVO.
-
-
 
 class Scanner:
     def __init__(self, ip, verbose=False):
@@ -15,7 +15,7 @@ class Scanner:
         self.ip = ip
         self.verbose = verbose
         self.open_ports = {}
-        self.closed_ports = []
+        self.closed_ports = 0
         
 
         self.operating_system = self.getOperatingSystem()
@@ -37,7 +37,10 @@ class Scanner:
 
         except:
 
-            self.closed_ports.append(port)
+            self.closed_ports += 1
+            
+
+            
 
     def scan_ports(self):
 
@@ -55,26 +58,29 @@ class Scanner:
 
     def getOperatingSystem(self):
         ttlNumber = 0
+
         if platform.system().lower() == "windows":
             command = f"ping -n 1 {self.ip}"
+        elif platform.system().lower() == "darwin":
+            command = f"ping -c 1 {self.ip}"
         else:
             command = f"ping -c 1 {self.ip}"
     
         try:
+         
             result = subprocess.check_output(command, shell=True, text=True)
         
-        # Buscar la primera línea que contiene TTL
-
-            for line in result.splitlines():
-                if "TTL=" in line.upper():
-                    ttlNumber = int(line.upper().split("TTL=")[1].split()[0])
-
-                    print(ttlNumber)
-
-                    if ttlNumber <= 70:
-                        return "Linux"
-                    else:
-                        return "Windows"
+           
+            ttl_match = re.search(r"TTL[=:]\s*(\d+)", result, re.IGNORECASE)
+        
+            if ttl_match:
+                ttlNumber = int(ttl_match.group(1))
+                print(f"TTL Number: {ttlNumber}")
+            
+                if ttlNumber <= 70:
+                    return "Linux"
+                else:
+                    return "Windows"
                 
             return "Undetermined"
         
@@ -87,14 +93,8 @@ class Scanner:
 
     def scan(self):
         self.scan_ports()
-        if self.verbose:
-            print(f"Open ports: {self.open_ports}")
-            print(f"Operating System: {self.operating_system}")
+        
 
-            ## print(f"Closed ports: {self.closed_ports}")
-
-        else:
-            print(f"Open ports: {self.open_ports}")
 
     def get_open_ports(self):
         return self.open_ports
@@ -117,9 +117,15 @@ class Scanner:
 
 def main():
 
-    ip = "192.168.1.151"
+    ip = "192.168.151.1"
     scanner = Scanner(ip, verbose=True)
     scanner.scan()
+
+    scannerJSON = json.dumps(scanner.__dict__, indent=4)
+
+    print(scannerJSON)
+
+
    
 main()
      
