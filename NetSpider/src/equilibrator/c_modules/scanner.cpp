@@ -5,11 +5,17 @@
 #include <mutex>
 #include <chrono>
 #include <cstring>
+
+#ifdef _WIN32
+#include <winsock2.h>
+#else
 #include <sys/socket.h>
 #include <arpa/inet.h>
 #include <netinet/in.h>
+#endif
+
 #include <unistd.h>
-#include <netdb.h>
+
 
 #include "scanner.h"
 

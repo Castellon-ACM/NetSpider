@@ -1,6 +1,6 @@
 #ifndef SCANNER_H
 #define SCANNER_H
-
+#include <algorithm>
 #include <unordered_map>
 #include <string>
 #include "ports.h"
@@ -84,13 +84,33 @@ private:
     }
 
     void scanPort(int port){
+
+        #ifdef _WIN32
+        WSADATA wsaData;
+        int wsaStartupResult = WSAStartup(MAKEWORD(2, 2), &wsaData); // Inicializar Winsock
+        if (wsaStartupResult != 0) {
+        std::cerr << "Error al inicializar Winsock" << std::endl;
+        return;
+        }
+        #endif
+
         int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-        if (sockfd == -1) return; // If it gives an error, it fails and returns.
+        if (sockfd == -1) {
+        std::cerr << "Error al crear el socket" << std::endl;
+        return;
+        }
 
         sockaddr_in server; // Guarda info del server
         server.sin_family = AF_INET; // af inet (IPV4 BLOSTE)
         server.sin_port = htons(port); //htons (NUMERO DE BLOSTES DEL PUERTO)
-        inet_pton(AF_INET, ip.c_str(), &server.sin_addr); 
+
+
+        #ifdef _WIN32
+        server.sin_addr.s_addr = inet_addr(ip.c_str());  // Para Windows
+        #else
+        inet_pton(AF_INET, ip.c_str(), &server.sin_addr);  // Para Unix (Linux/macOS)
+        #endif
+
         // Converts the ip to
         // a binary so it can be saved in the sin address.
 
@@ -105,10 +125,26 @@ private:
         timeout.tv_usec = 100000; 
         
         // esto le dice el timeout a mi socket, en sus opciones
+
+        #ifdef _WIN32
+        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&timeout, sizeof(timeout));
+        #else
         setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
+        #endif
+
+
         // guarda el resultado. si va la conexion, es 1, si no, 0.
+
+
+        // Intentar conectar
         int result = connect(sockfd, (struct sockaddr *)&server, sizeof(server));
-        close(sockfd);
+        #ifdef _WIN32
+        closesocket(sockfd);  // Usar closesocket en Windows
+        WSACleanup();         // Limpiar Winsock
+        #else
+        close(sockfd);        // Usar close en Unix
+        #endif
+
 
         if (result == 0) {
             // bloquea la edicion del puerto mutex, asegura que sea 
