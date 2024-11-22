@@ -9,8 +9,10 @@
 class PortScanner {
 public:
     
-    PortScanner(const std::string& ipAddress) : ip(ipAddress), portServiceMap(PORT_SERVICE_MAP) {
+    PortScanner(const std::string& ipAddress) : ip(ipAddress), portServiceMap(PORT_SERVICE_MAP), io_context(), resolver(io_context) {
     operating_system = getOperatingSystem();
+
+
 
 }
 
@@ -49,6 +51,9 @@ private:
     std::mutex port_mutex;
     int closedPorts = 0;
 
+    boost::asio::io_context io_context;
+    boost::asio::ip::tcp::resolver resolver;
+
     std::string getOperatingSystem(){
         char buffer[128];
         std::string result = "";
@@ -85,68 +90,20 @@ private:
 
     void scanPort(int port){
 
-        #ifdef _WIN32
-        WSADATA wsaData;
-        int wsaStartupResult = WSAStartup(MAKEWORD(2, 2), &wsaData); // Inicializar Winsock
-        if (wsaStartupResult != 0) {
-        std::cerr << "Error al inicializar Winsock" << std::endl;
-        return;
-        }
-        #endif
+     try {
+            boost::asio::ip::tcp::socket socket(io_context);
+            boost::asio::ip::tcp::endpoint endpoint(
+                boost::asio::ip::address::from_string(ip), port
+            );
 
-        int sockfd = socket(AF_INET, SOCK_STREAM, 0);
-        if (sockfd == -1) {
-        std::cerr << "Error al crear el socket" << std::endl;
-        return;
-        }
+            boost::system::error_code error;
+            socket.connect(endpoint, error);
 
-        sockaddr_in server; // Guarda info del server
-        server.sin_family = AF_INET; // af inet (IPV4 BLOSTE)
-        server.sin_port = htons(port); //htons (NUMERO DE BLOSTES DEL PUERTO)
+     
+   
 
 
-        #ifdef _WIN32
-        server.sin_addr.s_addr = inet_addr(ip.c_str());  // Para Windows
-        #else
-        inet_pton(AF_INET, ip.c_str(), &server.sin_addr);  // Para Unix (Linux/macOS)
-        #endif
-
-        // Converts the ip to
-        // a binary so it can be saved in the sin address.
-
-        // en el inet, se mete el protocolo ipv4, luego se pasa a string la ip,
-        // luego de eso, le digo que quiero guardar la direccion ip en binario de mi
-        // servidor en el sin address pointer, apuntando al server, ahi es donde la funcion
-        // tocara el bloste.
-
-        // Set timeout
-        timeval timeout;
-        timeout.tv_sec = 0;
-        timeout.tv_usec = 100000; 
-        
-        // esto le dice el timeout a mi socket, en sus opciones
-
-        #ifdef _WIN32
-        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, (const char*)&timeout, sizeof(timeout));
-        #else
-        setsockopt(sockfd, SOL_SOCKET, SO_RCVTIMEO, &timeout, sizeof(timeout));
-        #endif
-
-
-        // guarda el resultado. si va la conexion, es 1, si no, 0.
-
-
-        // Intentar conectar
-        int result = connect(sockfd, (struct sockaddr *)&server, sizeof(server));
-        #ifdef _WIN32
-        closesocket(sockfd);  // Usar closesocket en Windows
-        WSACleanup();         // Limpiar Winsock
-        #else
-        close(sockfd);        // Usar close en Unix
-        #endif
-
-
-        if (result == 0) {
+        if (!error) {
             // bloquea la edicion del puerto mutex, asegura que sea 
             // desbloqueado al terminar la edicion
 
@@ -172,7 +129,14 @@ private:
             closedPorts++;
         }
 
+        } catch (std::exception& e) {
+            ++closedPorts;
+        
+        } 
+        
     }
+
+
 
     
 

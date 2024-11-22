@@ -6,13 +6,12 @@
 #include <chrono>
 #include <cstring>
 
-#ifdef _WIN32
-#include <winsock2.h>
-#else
-#include <sys/socket.h>
-#include <arpa/inet.h>
-#include <netinet/in.h>
-#endif
+#include <boost/asio.hpp>
+#include <boost/bind/bind.hpp>
+
+
+
+
 
 #include <unistd.h>
 
