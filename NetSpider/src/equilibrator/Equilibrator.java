@@ -1,61 +1,74 @@
 package equilibrator;
+
 import java.io.File;
-import java.util.concurrent.CopyOnWriteArrayList;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 
 import config.ConfigurationSingleton;
 import entities.Node;
+
+// ESTA CLASE EQUIVALE A LA FUNCION QUE DESEMPEÑA MANUEL ZAFRA EN EL VERGELES , ESENCIAL.
 
 interface Arguments {
     public final String QUIET = "--quiet";
     public final String VERBOSE = "--verbose";
 }
 
-public class Equilibrator extends Thread implements Arguments{
+public class Equilibrator extends Thread implements Arguments {
 
     // Get Instance of ConfigurationSingleton
 
-    private final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
+    private static final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
 
-    protected final File pythonScript = new File("./python_modules/scanner.py");
+
+    protected static final File pythonScript = new File("./python_modules/scanner.py");
 
     // PROCESSES ARRAYLIST
     public static CopyOnWriteArrayList<ProcessBuilder> pythonProcesses = new CopyOnWriteArrayList<>();
 
     // QUEUE OF NODES TO PROCESS
-    public static CopyOnWriteArrayList<Node> ProcessQueue = new CopyOnWriteArrayList<>();
+    public static CopyOnWriteArrayList<Node> processQueue = new CopyOnWriteArrayList<>();
 
     // QUEUE OF PROCESSED NODES
     public static CopyOnWriteArrayList<Node> ProcessedQueue = new CopyOnWriteArrayList<>();
 
-    private ExecutorService executor = Executors.newFixedThreadPool(CONFIG.getPythonProcessInstancersThreads());
+    private static final ExecutorService executorInstancers = Executors.newFixedThreadPool(CONFIG.getPythonProcessInstancersThreads());
+    private static ScheduledExecutorService equilibratorExecutor = Executors.newScheduledThreadPool(CONFIG.getEquilibratorThreads());
 
-    public Equilibrator() {
+    public static void startEquilibrator() {
+        equilibratorExecutor.scheduleAtFixedRate(new Equilibrator(), 0,
+                CONFIG.getEquilibratorInterval(), TimeUnit.MILLISECONDS);
+    }
 
+    public static void stopEquilibrator() {
+        executorInstancers.shutdown();
+        equilibratorExecutor.shutdown();
     }
 
     @Override
     public void run() {
-        // TODO: Implement logic to clear and prepare queue
+        clearAndPrepareQueue();
+        startInstacers();
     }
 
     /**
      * Clears the ProcessQueue and creates the pythonProcesses queue
      */
     private void clearAndPrepareQueue() {
-        for (Node node : ProcessQueue) {
-            String currentArguments = (CONFIG.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
-            pythonProcesses.add(new ProcessBuilder("python", pythonScript.getAbsolutePath(),
-                    node.getIp(),currentArguments));
+        if (!processQueue.isEmpty()) {
+            for (Node node : processQueue) {
+                String currentArguments = (CONFIG.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
+                pythonProcesses.add(new ProcessBuilder("python", pythonScript.getAbsolutePath(),
+                        node.getIp(), currentArguments));
+            }
+            processQueue.clear();
         }
-        ProcessQueue.clear();
     }
-
+    /**
+     * Method to start PythonProcessInstancer if there are processes in the queue
+     */
     private void startInstacers() {
-        if (!pythonProcesses.isEmpty()) {
-            executor.execute(new PythonProcessInstancer());
-            // TODO: Implement logic to check if all python processes have completed
+        if (!pythonProcesses.isEmpty() && pythonProcesses.size() > CONFIG.getProcessesVolume()) {
+            executorInstancers.execute(new PythonProcessInstancer());
         }
     }
 }

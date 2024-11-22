@@ -10,8 +10,10 @@ public class ConfigurationSingleton {
     private boolean verboseMode;
     private int processesVolume; // Number of processes that PythonProcessInstancer will get from the queue
     private double maxCpuLoad;
-    private int threadSleepPythonInstancer;
+    private int threadSleepPythonInstancer; // In milliseconds
+    private int equilibratorThreads; // Thread pool size for Equilibrator (in MILISECONDS)
     private int PythonProcessInstancersThreads; // Thread pool size for PythonProcessInstancer
+    private int equilibratorInterval; // Intervall in seconds between each equilibration process
     private String asciiArt = """
                         
                          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡖⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -41,7 +43,8 @@ public class ConfigurationSingleton {
         this.maxCpuLoad = 80;
         this.threadSleepPythonInstancer = 1000;
         this.threadSleepPythonInstancer = 3;
-
+        this.equilibratorThreads = 1;
+        this.equilibratorInterval = 2000;
     }
 
 
@@ -94,5 +97,13 @@ public class ConfigurationSingleton {
 
     public int getPythonProcessInstancersThreads() {
         return PythonProcessInstancersThreads;
+    }
+
+    public int getEquilibratorThreads() {
+        return equilibratorThreads;
+    }
+
+    public int getEquilibratorInterval() {
+        return equilibratorInterval;
     }
 }
