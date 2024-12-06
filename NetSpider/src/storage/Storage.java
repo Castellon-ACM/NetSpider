@@ -63,7 +63,7 @@ public class Storage implements Migrable {
     }
 
     /**
-     * Add the nodes to the storage, if a
+     * Add the nodes to the storage, if a node already exists overwrites it
      *
      * @param newNodes
      * @return
