@@ -1,24 +1,33 @@
 package storage.ip_extractor;
-
+import config.ConfigurationSingleton;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
-//EXTRACTOR DE IPS, ESCANEA LAS IPS DE LA RED
-// DIFICULTAD MEDIA
 public class IpExtractor {
-
+    private final ConfigurationSingleton config = ConfigurationSingleton.getInstance();
+    private final List<String> networkSegments = new ArrayList<>();
+    
+    public IpExtractor() {
+        for (int i = 0; i < 256; i++) {
+            networkSegments.add("192.168." + i);
+        }
+    }
+    
     /**
-     * Gets active IP addresses from a list of given IP addresses
-     * @param ipAddresses
+     * Gets active IP addresses from all 192.168.x network segments
      * @return List of active IP addresses
      */
-    public List<String> getActiveIps(List<String> ipAddresses) {
+    public List<String> getActiveIps() {
         List<String> activeIps = new ArrayList<>();
-        for (String ip : ipAddresses) {
-            if (isIpActive(ip)) {
-                activeIps.add(ip);
+        
+        for (String segment : networkSegments) {
+            for (int i = 1; i < 255; i++) {
+                String ipAddress = segment + "." + i;
+                if (isIpActive(ipAddress)) {
+                    activeIps.add(ipAddress);
+                }
             }
         }
         return activeIps;
@@ -32,7 +41,7 @@ public class IpExtractor {
     private boolean isIpActive(String ipAddress) {
         try {
             InetAddress inet = InetAddress.getByName(ipAddress);
-            return inet.isReachable(1000); // Timeout of 1000ms
+            return inet.isReachable(config.getIpScannerTimeout()); // Timeout
         } catch (IOException e) {
             e.printStackTrace();
             return false;

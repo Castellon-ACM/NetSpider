@@ -1,6 +1,7 @@
 package equilibrator;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -74,5 +75,21 @@ public class Equilibrator extends Thread implements Arguments {
         if (!cProcesses.isEmpty() && cProcesses.size() > CONFIG.getProcessesVolume()) {
             executorInstancers.execute(new ProcessInstancer());
         }
+    }
+   
+    /**
+     * Method to export processed nodes to another thread
+     * @return ArrayList with processed nodes
+     */
+    public static ArrayList<Node> clearAndExport() {
+        ArrayList<Node> nodes = null;
+        if (!ProcessedQueue.isEmpty()) {
+            nodes = new ArrayList<>(ProcessedQueue);
+            ProcessedQueue.clear();
+        }
+        return nodes;
+    }
+    public static void importNodes(ArrayList<Node> nodes) {
+        processQueue.addAll(nodes);
     }
 }
