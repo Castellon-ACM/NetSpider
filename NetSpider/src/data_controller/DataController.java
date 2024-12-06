@@ -1,30 +1,33 @@
 package data_controller;
-
 import java.util.ArrayList;
-
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import entities.Node;
+import equilibrator.Equilibrator;
+import storage.Storage;
 
-// CONTROLADOR DE DATOS
-// DIFICULTAD DIFICIL
 public class DataController extends Thread {
+    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    @Override
+    public void run() {
+        // Saves the processed nodes to the storage
+        ArrayList<Node> nodes = Equilibrator.clearAndExport();
+        if (!nodes.isEmpty()) {
+            Storage.addNodes(nodes);
+        }
 
-    private ArrayList<Node> lapsedNodes = new ArrayList<>();
-    private ArrayList<Node> processedNodes = new ArrayList<>();
-
-
-    public ArrayList<Node> getLapsedNodes() {
-        return lapsedNodes;
+        // Saves the lapsed nodes to the equilibrator
+        ArrayList<Node> lapsedNodes = Storage.getLapsedNodes();
+        if (!lapsedNodes.isEmpty()) {
+            Equilibrator.importNodes(lapsedNodes);
+        }
     }
 
-    public void setLapsedNodes(ArrayList<Node> lapsedNodes) {
-        this.lapsedNodes = lapsedNodes;
+    public static void startDataController() {
+        DataController dataController = new DataController();
+        dataController.executor.scheduleAtFixedRate(dataController, 10, 10, TimeUnit.SECONDS);
     }
 
-    public ArrayList<Node> getProcessedNodes() {
-        return processedNodes;
-    }
 
-    public void setProcessedNodes(ArrayList<Node> processedNodes) {
-        this.processedNodes = processedNodes;
-    }
 }
