@@ -15,6 +15,8 @@ public class ConfigurationSingleton {
     private int PythonProcessInstancersThreads; // Thread pool size for PythonProcessInstancer
     private int equilibratorInterval; // Intervall in seconds between each equilibration process
     private int ipScannerTimeout; // Timeout in milliseconds
+
+
     private String asciiArt = """
                         
                          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡖⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
