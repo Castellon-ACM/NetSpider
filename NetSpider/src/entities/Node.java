@@ -21,17 +21,19 @@ public class Node {
     private boolean isLapsed = false;
     private Date lastUpdate;
     private ArrayList<Port> ports = new ArrayList<>();
+    private int closedPorts;
 
 
     public Node() {
 
     }
 
-    public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem, Date lastUpdate) {
+    public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem, Date lastUpdate, int closedPorts)  {
         this.ip = ip;
         this.nodeName = nodeName;
         this.operativeSystem = operativeSystem;
         this.lastUpdate = lastUpdate;
+        this.closedPorts = closedPorts;
 
 
 
@@ -66,8 +68,9 @@ public class Node {
         return operativeSystem;
     }
 
-    public void setOperativeSystem(OPERATIVE_SYSTEM operativeSystem) {
-        this.operativeSystem = operativeSystem;
+    public void setOperativeSystem(String operativeSystem) {
+        OPERATIVE_SYSTEM os = OPERATIVE_SYSTEM.valueOf(operativeSystem.toUpperCase());
+        this.operativeSystem = os;
     }
 
     @XmlElement
@@ -101,4 +104,15 @@ public class Node {
     public void addPort(Port port) {
         this.ports.add(port);
     }
+
+    @XmlElement
+    public int getClosedPorts() {
+        return closedPorts;
+    }
+
+    public void setClosedPorts(int closedPorts) {
+        this.closedPorts = closedPorts;
+    }
+
+    
 }

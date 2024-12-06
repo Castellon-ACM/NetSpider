@@ -6,27 +6,27 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.ArrayList;
 import config.ConfigurationSingleton;
-import processor.PythonOutputParser;
+import processor.OutputParser;
 
-public class PythonProcessInstancer extends Thread {
+public class ProcessInstancer extends Thread {
 
     private final ConfigurationSingleton Configuration = ConfigurationSingleton.getInstance();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private ArrayList<ProcessBuilder> processBuilders;
 
-
+    
 
     @Override
        public void run() {
         processBuilders = new ArrayList<>();
         int i = 0;
-        while (i < Configuration.getProcessesVolume() && i < Equilibrator.pythonProcesses.size()) {
-            ProcessBuilder builder = Equilibrator.pythonProcesses.get(i);
+        while (i < Configuration.getProcessesVolume() && i < Equilibrator.cProcesses.size()) {
+            ProcessBuilder builder = Equilibrator.cProcesses.get(i);
             processBuilders.add(builder);
             i++;
         }
         if (!processBuilders.isEmpty()) {
-            Equilibrator.pythonProcesses.removeAll(processBuilders);
+            Equilibrator.cProcesses.removeAll(processBuilders);
             // We use a scheduled executor to run the checkAndProcessBuilders method periodically
             // This ensures that the Python processes are only started when the CPU load is below the maximum allowed value
             scheduler.scheduleAtFixedRate(this::checkAndProcessBuilders, 0,
@@ -35,7 +35,7 @@ public class PythonProcessInstancer extends Thread {
     }
 
     /**
-     * Checks the CPU load and starts new Python processes if the load is below the maximum allowed value
+     * Checks the CPU load and starts new processes if the load is below the maximum allowed value
      */
     private void checkAndProcessBuilders() {
         if (UtilsCpu.getCpuLoad() <= Configuration.getMaxCpuLoad()) {
@@ -57,8 +57,7 @@ public class PythonProcessInstancer extends Thread {
     private void processInstancer(ProcessBuilder builder) {
         try {
             Process process = builder.start();
-            // TODO : Process the output of the Python process using a separate thread
-            new PythonOutputParser(process).start();
+            new OutputParser(process).start();
         } catch (IOException e) {
             e.printStackTrace();
         }

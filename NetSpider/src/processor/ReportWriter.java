@@ -66,8 +66,8 @@ public class ReportWriter extends Thread {
      */
     private void generatePDFReport() {
         try {
-            XMLToPDF converter = new XMLToPDF(xmlFile, pdfFile);
-            converter.generatePDF();
+            //XMLToPDF converter = new XMLToPDF(xmlFile, pdfFile);
+            // converter.generatePDF();
 
             System.out.println("PDF generado exitosamente en: " + pdfFile.getAbsolutePath());
         } catch (Exception e) {

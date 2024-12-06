@@ -1,7 +1,11 @@
 package equilibrator;
 
 import java.io.File;
-import java.util.concurrent.*;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 import config.ConfigurationSingleton;
 import entities.Node;
@@ -20,10 +24,10 @@ public class Equilibrator extends Thread implements Arguments {
     private static final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
 
 
-    protected static final File pythonScript = new File("./python_modules/scanner.py");
+    protected static final File cScript = new File("./c_modules/extraktorMACOS");
 
     // PROCESSES ARRAYLIST
-    public static CopyOnWriteArrayList<ProcessBuilder> pythonProcesses = new CopyOnWriteArrayList<>();
+    public static CopyOnWriteArrayList<ProcessBuilder> cProcesses = new CopyOnWriteArrayList<>();
 
     // QUEUE OF NODES TO PROCESS
     public static CopyOnWriteArrayList<Node> processQueue = new CopyOnWriteArrayList<>();
@@ -57,7 +61,7 @@ public class Equilibrator extends Thread implements Arguments {
         if (!processQueue.isEmpty()) {
             for (Node node : processQueue) {
                 String currentArguments = (CONFIG.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
-                pythonProcesses.add(new ProcessBuilder("python", pythonScript.getAbsolutePath(),
+                cProcesses.add(new ProcessBuilder("", cScript.getAbsolutePath(),
                         node.getIp(), currentArguments));
             }
             processQueue.clear();
@@ -67,8 +71,8 @@ public class Equilibrator extends Thread implements Arguments {
      * Method to start PythonProcessInstancer if there are processes in the queue
      */
     private void startInstacers() {
-        if (!pythonProcesses.isEmpty() && pythonProcesses.size() > CONFIG.getProcessesVolume()) {
-            executorInstancers.execute(new PythonProcessInstancer());
+        if (!cProcesses.isEmpty() && cProcesses.size() > CONFIG.getProcessesVolume()) {
+            executorInstancers.execute(new ProcessInstancer());
         }
     }
 }
