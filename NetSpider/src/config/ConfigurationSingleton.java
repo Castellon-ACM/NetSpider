@@ -14,6 +14,7 @@ public class ConfigurationSingleton {
     private int equilibratorThreads; // Thread pool size for Equilibrator (in MILISECONDS)
     private int PythonProcessInstancersThreads; // Thread pool size for PythonProcessInstancer
     private int equilibratorInterval; // Intervall in seconds between each equilibration process
+    private int ipScannerTimeout; // Timeout in milliseconds
     private String asciiArt = """
                         
                          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡖⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -45,6 +46,7 @@ public class ConfigurationSingleton {
         this.threadSleepPythonInstancer = 3;
         this.equilibratorThreads = 1;
         this.equilibratorInterval = 2000;
+        this.ipScannerTimeout = 100;
     }
 
 
@@ -105,5 +107,9 @@ public class ConfigurationSingleton {
 
     public int getEquilibratorInterval() {
         return equilibratorInterval;
+    }
+
+    public int getIpScannerTimeout() {
+        return ipScannerTimeout;
     }
 }
