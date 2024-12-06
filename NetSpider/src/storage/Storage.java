@@ -63,12 +63,24 @@ public class Storage implements Migrable {
     }
 
     /**
-     * Add the nodes to the storage
+     * Add the nodes to the storage, if a
      *
-     * @param nodes
+     * @param newNodes
      * @return
      */
-    public static boolean addNodes(ArrayList<Node> nodes) {
-        return nodes.addAll(nodes);
+    public static void addNodes(ArrayList<Node> newNodes) {
+        for (Node newNode : newNodes) {
+            boolean existNode = false;
+            for (int i = 0; i < nodes.size(); i++) {
+                if (nodes.get(i).getIp().equals(newNode.getIp())) {
+                    nodes.set(i, newNode);  // Overwrite existing node
+                    existNode = true;
+                    i = nodes.size() + 1;
+                }
+            }
+            if (!existNode) {
+                nodes.add(newNode);
+            }
+        }
     }
 }
