@@ -12,9 +12,9 @@ public class ProcessInstancer extends Thread {
 
     private final ConfigurationSingleton Configuration = ConfigurationSingleton.getInstance();
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private ArrayList<ProcessBuilder> processBuilders;
 
-    
+    private ArrayList<ProcessBuilder> processBuilders; // List of ProcessBuilder objects to be started
+
 
     @Override
        public void run() {
@@ -28,7 +28,7 @@ public class ProcessInstancer extends Thread {
         if (!processBuilders.isEmpty()) {
             Equilibrator.cProcesses.removeAll(processBuilders);
             // We use a scheduled executor to run the checkAndProcessBuilders method periodically
-            // This ensures that the Python processes are only started when the CPU load is below the maximum allowed value
+            // This ensures that the c processes are only started when the CPU load is below the maximum allowed value
             scheduler.scheduleAtFixedRate(this::checkAndProcessBuilders, 0,
                     Configuration.getThreadSleepPythonInstancer(), TimeUnit.MILLISECONDS);
         }
@@ -51,15 +51,16 @@ public class ProcessInstancer extends Thread {
     }
 
     /**
-     * Starts a new Python process and processes its output
+     * Starts a new c process and processes its output
      * @param builder The ProcessBuilder for the Python process.
      */
     private void processInstancer(ProcessBuilder builder) {
         try {
             Process process = builder.start();
             new OutputParser(process).start();
-        } catch (IOException e) {
-            e.printStackTrace();
+        }
+         catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

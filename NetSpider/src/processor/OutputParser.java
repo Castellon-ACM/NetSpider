@@ -1,18 +1,10 @@
 package processor;
-
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-
 import entities.Node;
 import entities.Port;
 
-
-// RECOGERÁ TAMBIEN EL OUTPUT DEL PROCESO DE PYTHON
-// DEBE DE PARSEAR EL JSON QUE DEVUELVE EL JEFAZO DE FELIX EN SU PROCESO DE PYTHON Y CONVERTIRLO A UN
-// OBJETO NODE. UNA VEZ SE CONVIERTA SE GUARDARÁ EN EL PROCESSED QUEUE DEL EQUILIBRATOR
-//  ********************SE HARÁ DE MANERA ASÍNCRONA*********************
 public class OutputParser extends Thread {
     private Process cProcess;
 
@@ -29,8 +21,13 @@ public class OutputParser extends Thread {
     @Override
     public void run() {
         if (cProcess != null) {
+            try {
+                cProcess.waitFor(); // waits until the process finishes
+                Node nodeFromOutput = toNode(cProcess);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
 
-            Node nodeFromOutput = toNode(cProcess);
             
 
 
