@@ -4,35 +4,14 @@ import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import config.ConfigurationSingleton;
-import data_controller.Migrable;
 import entities.Node;
 
 // Clase almacén
 // Dificultad medio
-public class Storage implements Migrable {
+public class Storage  {
     private static final ConfigurationSingleton config = ConfigurationSingleton.getInstance();
     private static CopyOnWriteArrayList<Node> nodes = new CopyOnWriteArrayList<>();
 
-    /**
-     * Method to import nodes
-     *
-     * @param nodes net nodes
-     */
-    @Override
-    public void saveNodes(ArrayList<Node> nodes) {
-        addNodes(nodes);
-    }
-
-    /**
-     * Method to export nodes.
-     * It returns the nodes in the CopyOnWriteArrayList
-     *
-     * @return nodes
-     */
-    @Override
-    public ArrayList<Node> exportNodes() {
-        return new ArrayList<>(nodes);
-    }
 
     /**
      * Method to get lapsed nodes

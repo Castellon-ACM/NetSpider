@@ -10,7 +10,7 @@ import storage.Storage;
 public class DataController extends Thread {
     ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
 
-    
+
     @Override
     public void run() {
         importProcessedNodesIntoStorage();
