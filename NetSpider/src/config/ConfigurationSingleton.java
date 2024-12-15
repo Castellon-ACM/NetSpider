@@ -2,6 +2,7 @@ package config;
 
 // CONFIGURACIÓN DEL PROYECTO
 
+
 public class ConfigurationSingleton {
 
     private static ConfigurationSingleton instance = null;
@@ -16,7 +17,9 @@ public class ConfigurationSingleton {
     private int equilibratorInterval; // Intervall in seconds between each equilibration process
     private int ipScannerTimeout; // Timeout in milliseconds
     private int dataControllerPeriod; // Interval in seconds between each dataController execution
-
+    private SCAN_TYPE ipScannerType; // Type of IP scan (FULL or PARTIAL)
+    private String ipRange; // IP range to scan (e.g., 192.168.0)
+    private int ipScannerSecondsInterval; // Number of seconds
 
     private String asciiArt = """
                         
@@ -52,8 +55,11 @@ public class ConfigurationSingleton {
         this.threadSleepCModuleInstancer = 1000;
         this.equilibratorThreads = 1;
         this.equilibratorInterval = 2000;
-        this.ipScannerTimeout = 100;
+        this.ipScannerTimeout = 20; // To increase the speed of the IP scanner, decrease this value
         this.dataControllerPeriod = 10;
+        this.ipScannerType = SCAN_TYPE.FULL;
+        this.ipRange = "192.168.1";
+        this.ipScannerSecondsInterval = 60;
     }
 
 
@@ -62,6 +68,14 @@ public class ConfigurationSingleton {
             instance = new ConfigurationSingleton();
         }
         return instance;
+    }
+
+    public SCAN_TYPE getIpScannerType() {
+        return ipScannerType;
+    }
+
+    public String getIpRange() {
+        return ipRange;
     }
 
     public int getExpirationTime() {
@@ -118,5 +132,9 @@ public class ConfigurationSingleton {
 
     public int getIpScannerTimeout() {
         return ipScannerTimeout;
+    }
+
+    public int getIpScannerSecondsInterval() {
+        return ipScannerSecondsInterval;
     }
 }
