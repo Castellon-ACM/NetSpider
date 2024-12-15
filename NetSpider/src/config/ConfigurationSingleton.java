@@ -10,11 +10,12 @@ public class ConfigurationSingleton {
     private boolean verboseMode;
     private int processesVolume; // Number of processes that PythonProcessInstancer will get from the queue
     private double maxCpuLoad;
-    private int threadSleepPythonInstancer; // In milliseconds
+    private int threadSleepCModuleInstancer; // In milliseconds
     private int equilibratorThreads; // Thread pool size for Equilibrator (in MILISECONDS)
     private int PythonProcessInstancersThreads; // Thread pool size for PythonProcessInstancer
     private int equilibratorInterval; // Intervall in seconds between each equilibration process
     private int ipScannerTimeout; // Timeout in milliseconds
+    private int dataControllerPeriod; // Interval in seconds between each dataController execution
 
 
     private String asciiArt = """
@@ -39,16 +40,20 @@ public class ConfigurationSingleton {
                         """;
 
 
+    public int getDataControllerPeriod() {
+        return dataControllerPeriod;
+    }
+
     private ConfigurationSingleton() {
         this.expirationTime = 50;
         this.verboseMode = true;
         this.processesVolume = 10;
         this.maxCpuLoad = 80;
-        this.threadSleepPythonInstancer = 1000;
-        this.threadSleepPythonInstancer = 3;
+        this.threadSleepCModuleInstancer = 1000;
         this.equilibratorThreads = 1;
         this.equilibratorInterval = 2000;
         this.ipScannerTimeout = 100;
+        this.dataControllerPeriod = 10;
     }
 
 
@@ -95,8 +100,8 @@ public class ConfigurationSingleton {
         return maxCpuLoad;
     }
 
-    public int getThreadSleepPythonInstancer() {
-        return threadSleepPythonInstancer;
+    public int getThreadSleepCModuleInstancer() {
+        return threadSleepCModuleInstancer;
     }
 
     public int getPythonProcessInstancersThreads() {

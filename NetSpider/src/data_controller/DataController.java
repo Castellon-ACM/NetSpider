@@ -3,12 +3,15 @@ import java.util.ArrayList;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+
+import config.ConfigurationSingleton;
 import entities.Node;
 import equilibrator.Equilibrator;
 import storage.Storage;
 
 public class DataController extends Thread {
     ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    private static final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
 
 
     @Override
@@ -42,7 +45,7 @@ public class DataController extends Thread {
 
     public static void startDataController() {
         DataController dataController = new DataController();
-        dataController.executor.scheduleAtFixedRate(dataController, 10, 10, TimeUnit.SECONDS);
+        dataController.executor.scheduleAtFixedRate(dataController, 10, CONFIG.getDataControllerPeriod(), TimeUnit.SECONDS);
     }
 
 
