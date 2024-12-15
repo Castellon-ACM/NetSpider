@@ -1,17 +1,18 @@
 package processor;
 
+import entities.Node;
+import entities.Port;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.StringWriter;
-import java.security.Provider;
 import java.util.ArrayList;
 
-import entities.Node;
-import entities.Port;
+
 import jakarta.xml.bind.JAXBContext;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.bind.Marshaller;
+import java.nio.charset.StandardCharsets;
 
 public class ReportWriter extends Thread {
     private ArrayList<Node> nodes = new ArrayList<>();
@@ -28,7 +29,6 @@ public class ReportWriter extends Thread {
         this.nodes = nodes;
         this.xmlFile = xmlFile;
         this.pdfFile = pdfFile;
-        if (!nodes.isEmpty()) this.start();
     }
 
     @Override
@@ -41,8 +41,7 @@ public class ReportWriter extends Thread {
      * Writes the list of nodes to the file in XML format.
      */
     private void writeNodesToFile() {
-        try (FileWriter writer = new FileWriter(xmlFile)) {
-
+        try (FileWriter writer = new FileWriter(xmlFile, StandardCharsets.UTF_8)) {
             JAXBContext context = JAXBContext.newInstance(Node.class, Port.class);
             Marshaller marshaller = context.createMarshaller();
 
@@ -61,13 +60,14 @@ public class ReportWriter extends Thread {
         }
     }
 
+
     /**
      * Generates a PDF report from the XML file.
      */
     private void generatePDFReport() {
         try {
-            //XMLToPDF converter = new XMLToPDF(xmlFile, pdfFile);
-            // converter.generatePDF();
+            XMLToPDF converter = new XMLToPDF(xmlFile, pdfFile);
+            converter.generatePDF();
 
             System.out.println("PDF generado exitosamente en: " + pdfFile.getAbsolutePath());
         } catch (Exception e) {

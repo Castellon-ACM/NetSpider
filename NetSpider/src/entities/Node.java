@@ -1,45 +1,39 @@
 package entities;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
+import entities.Port;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlElementWrapper;
 import jakarta.xml.bind.annotation.XmlRootElement;
 import jakarta.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 
-enum OPERATIVE_SYSTEM {
-    LINUX, WINDOWS
-}
+
 
 @XmlRootElement(name = "Node")
-@XmlType(propOrder = {"ip", "nodeName", "operativeSystem", "isLapsed", "lastUpdate", "ports"})
+@XmlType(propOrder = {"ip", "nodeName", "operativeSystem", "lapsed", "lastUpdate", "ports"})
 public class Node {
+
+    public enum OPERATIVE_SYSTEM {
+        LINUX, WINDOWS
+    }
     private String ip;
     private String nodeName;
     private OPERATIVE_SYSTEM operativeSystem;
     private boolean isLapsed = false;
     private Date lastUpdate;
     private ArrayList<Port> ports = new ArrayList<>();
-    private int closedPorts;
 
 
     public Node() {
-
     }
 
-    public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem, Date lastUpdate, int closedPorts)  {
+    public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem, Date lastUpdate) {
         this.ip = ip;
         this.nodeName = nodeName;
         this.operativeSystem = operativeSystem;
         this.lastUpdate = lastUpdate;
-        this.closedPorts = closedPorts;
-
-
-
     }
-
-    
 
     public void updateLastProcessedTime() {
         this.lastUpdate = Calendar.getInstance().getTime();
@@ -68,9 +62,8 @@ public class Node {
         return operativeSystem;
     }
 
-    public void setOperativeSystem(String operativeSystem) {
-        OPERATIVE_SYSTEM os = OPERATIVE_SYSTEM.valueOf(operativeSystem.toUpperCase());
-        this.operativeSystem = os;
+    public void setOperativeSystem(OPERATIVE_SYSTEM operativeSystem) {
+        this.operativeSystem = operativeSystem;
     }
 
     @XmlElement
@@ -104,15 +97,4 @@ public class Node {
     public void addPort(Port port) {
         this.ports.add(port);
     }
-
-    @XmlElement
-    public int getClosedPorts() {
-        return closedPorts;
-    }
-
-    public void setClosedPorts(int closedPorts) {
-        this.closedPorts = closedPorts;
-    }
-
-    
 }

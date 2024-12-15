@@ -49,17 +49,6 @@ public class OutputParser extends Thread {
                     Port port = new Port(portNumber, serviceDescription);
                     node.addPort(port);
                 }
-                if (line.startsWith("cerrados")) {
-                    String[] parts = line.split("|");
-                    String closedPorts = parts[1];
-                    node.setClosedPorts(Integer.parseInt(closedPorts));
-                }
-                if (line.startsWith("sistemaoperativo")) {
-                    String[] parts = line.split("|");
-                    String os = parts[1];
-                    node.setOperativeSystem(os);
-                 }
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);

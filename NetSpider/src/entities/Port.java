@@ -3,7 +3,7 @@ package entities;
 import jakarta.xml.bind.annotation.XmlElement;
 import jakarta.xml.bind.annotation.XmlType;
 
-@XmlType(propOrder = {"portNumber", "service"})
+@XmlType(propOrder = {"portNumber", "serviceDescription"})
 public class Port {
     private String portNumber;
     private String serviceDescription;
