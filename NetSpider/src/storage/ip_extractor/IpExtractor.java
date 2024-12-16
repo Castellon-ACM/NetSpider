@@ -48,7 +48,7 @@ public class IpExtractor {
      * Gets active IP addresses from all 192.168.x network segments
      * @return List of active IP addresses
      */
-    public List<String> getActiveIps() {
+    private List<String> getActiveIps() {
         List<String> activeIps = new ArrayList<>();
         
         for (String segment : networkSegments) {
