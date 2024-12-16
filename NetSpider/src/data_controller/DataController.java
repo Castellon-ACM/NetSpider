@@ -10,7 +10,7 @@ import equilibrator.Equilibrator;
 import storage.Storage;
 
 public class DataController extends Thread {
-    ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
+    static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private static final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
 
 
@@ -44,8 +44,11 @@ public class DataController extends Thread {
     }
 
     public static void startDataController() {
-        DataController dataController = new DataController();
-        dataController.executor.scheduleAtFixedRate(dataController, 10, CONFIG.getDataControllerPeriod(), TimeUnit.SECONDS);
+        DataController.executor.scheduleAtFixedRate(new DataController(), 10, CONFIG.getDataControllerPeriod(), TimeUnit.SECONDS);
+    }
+
+    public static void stopDataController() {
+        executor.shutdown();
     }
 
 

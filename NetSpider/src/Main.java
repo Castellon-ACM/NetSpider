@@ -9,9 +9,14 @@ public class Main {
         ConfigurationSingleton config = ConfigurationSingleton.getInstance();
         showConfig(config);
         DataController.startDataController();
-        IpExtractor ipExtractor = new IpExtractor();
+        IpExtractor ipExtractor = new IpExtractor(); // Starts automatically
         Equilibrator.startEquilibrator();
-
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+           ipExtractor.stopIpExtractor();
+           Equilibrator.stopEquilibrator();
+           DataController.stopDataController();
+           // TODO: GENERATE THE PDF FILE
+        })); // Shutdown hook to stop the threads when the JVM exits
 
     }
 

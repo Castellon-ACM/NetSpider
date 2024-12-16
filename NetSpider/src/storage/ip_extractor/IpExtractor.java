@@ -98,4 +98,7 @@ public class IpExtractor {
             nodeParserAndSaver(activeIps);
         }, 0, config.getIpScannerSecondsInterval(), TimeUnit.SECONDS);
     }
+    public void stopIpExtractor() {
+        executor.shutdown();
+    }
 }
