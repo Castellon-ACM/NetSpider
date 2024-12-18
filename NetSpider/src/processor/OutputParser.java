@@ -2,6 +2,7 @@ package processor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.Date;
 
 import Debug.DebugCenter;
@@ -12,20 +13,21 @@ import equilibrator.Equilibrator;
 
 public class OutputParser extends Thread {
     private Process cProcess;
+    private String ip;
 
     /**
      * Receives a Process object and starts the thread
      *
      * @param cProcess
      */
-    public OutputParser(Process cProcess) {
+    public OutputParser(Process cProcess, String ip) {
         this.cProcess = cProcess;
+        this.ip = ip;
     }
 
 
     @Override
     public void run() {
-        DebugCenter.debug("OutputParser started for process, is alive? : " + cProcess.isAlive());
         if (cProcess != null) {
             try {
                 DebugCenter.debug("OutputParser waiting for process to finish... ");
@@ -41,19 +43,28 @@ public class OutputParser extends Thread {
     }
 
     private Node toNode(Process process) {
-        Node node = new Node();
+        Node node = null;
         try (BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()))) {
+            ArrayList<Port> ports = new ArrayList<Port>();
+            Node.OPERATIVE_SYSTEM operatingSystem = Node.OPERATIVE_SYSTEM.LINUX;
+
             String line;
             while ((line = reader.readLine()) != null) {
                 if (line.startsWith("puerto" )) {
                     String[] parts = line.split("|");
                     String portNumber = parts[1];
                     String serviceDescription = parts[2];
-                    Port port = new Port(portNumber, serviceDescription);
-                    node.addPort(port);
-                    node.setLastUpdate(new Date());
+                    ports.add(new Port(portNumber, serviceDescription));
+
                 }
+                if (line.startsWith("sistemaoperativo" )) {
+                    String[] parts = line.split("|");
+                    String op = parts[1];
+                    operatingSystem = op.equalsIgnoreCase("windows")? Node.OPERATIVE_SYSTEM.WINDOWS : Node.OPERATIVE_SYSTEM.LINUX;
+                }
+
             }
+            node = new Node( ip, operatingSystem, ports, new Date() );
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

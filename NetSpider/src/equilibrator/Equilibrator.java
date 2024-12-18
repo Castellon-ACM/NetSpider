@@ -1,6 +1,7 @@
 package equilibrator;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutorService;
@@ -25,8 +26,8 @@ public class Equilibrator extends Thread implements Arguments {
 
     private static final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
 
-
-    protected static final File cScript = new File("./c_modules/extraktorMACOS");
+    // "c_modules/extraktorLINUX"
+    protected static final File cScript = new File("/home/kaos/Projects/java/netspider/NetSpider/src/equilibrator/c_modules/extractorLINUX.out");
 
     // PROCESSES ARRAYLIST
     public static CopyOnWriteArrayList<ProcessBuilder> cProcesses = new CopyOnWriteArrayList<>();
@@ -70,7 +71,7 @@ public class Equilibrator extends Thread implements Arguments {
             for (Node node : processQueue) {
                 DebugCenter.debug("Adding process to cProcesses queue in equilibrator: " + node.getIp());
                 String currentArguments = (CONFIG.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
-                cProcesses.add(new ProcessBuilder("", cScript.getAbsolutePath(),
+                cProcesses.add(new ProcessBuilder( cScript.getAbsolutePath(),
                         node.getIp(), currentArguments));
             }
             processQueue.clear();

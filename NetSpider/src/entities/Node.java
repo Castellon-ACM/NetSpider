@@ -18,7 +18,6 @@ public class Node {
         LINUX, WINDOWS
     }
     private String ip;
-    private String nodeName;
     private OPERATIVE_SYSTEM operativeSystem;
     private boolean isLapsed = false;
     private Date lastUpdate;
@@ -31,15 +30,14 @@ public class Node {
     /**
      * Constructor for creating a new node with a given IP address, node name, and operating system
      * @param ip
-     * @param nodeName
      * @param operativeSystem
      * @param lastUpdate
      */
-    public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem, Date lastUpdate) {
+    public Node(String ip, OPERATIVE_SYSTEM operativeSystem, ArrayList<Port> ports, Date lastUpdate) {
         this.ip = ip;
-        this.nodeName = nodeName;
         this.operativeSystem = operativeSystem;
         this.lastUpdate = lastUpdate;
+        this.ports = ports;
     }
 
     /**
@@ -48,7 +46,6 @@ public class Node {
      */
     public Node(String ip) {
         this.ip = ip;
-        this.nodeName = "Unknown";
         this.operativeSystem = OPERATIVE_SYSTEM.LINUX;
         updateLastProcessedTime();
         this.ports = new ArrayList<>();
@@ -72,14 +69,6 @@ public class Node {
         this.ip = ip;
     }
 
-    @XmlElement
-    public String getNodeName() {
-        return nodeName;
-    }
-
-    public void setNodeName(String nodeName) {
-        this.nodeName = nodeName;
-    }
 
     @XmlElement(name = "OperativeSystem")
     public OPERATIVE_SYSTEM getOperativeSystem() {
