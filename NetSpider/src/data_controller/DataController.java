@@ -4,6 +4,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import Debug.DebugCenter;
 import config.ConfigurationSingleton;
 import entities.Node;
 import equilibrator.Equilibrator;
@@ -16,6 +17,7 @@ public class DataController extends Thread {
 
     @Override
     public void run() {
+        Storage.setLapsedNodes();
         importProcessedNodesIntoStorage();
         exportLapsedNodesToEquilibrator();
     }
@@ -28,6 +30,7 @@ public class DataController extends Thread {
         // Saves the processed nodes to the storage
         ArrayList<Node> nodes = Equilibrator.clearAndExport();
         if (!nodes.isEmpty()) {
+            DebugCenter.debug("IMPORTING PROCESSED NODES TO STORAGE: " + nodes.size() + " nodes");
             Storage.addNodes(nodes);
         }
     }
@@ -39,6 +42,7 @@ public class DataController extends Thread {
         // Saves the lapsed nodes to the equilibrator
         ArrayList<Node> lapsedNodes = Storage.getLapsedNodes();
         if (!lapsedNodes.isEmpty()) {
+            DebugCenter.debug("EXPORTING LAPSED NODES TO EQUILIBRATOR: " + lapsedNodes.size() + " nodes");
             Equilibrator.importNodes(lapsedNodes);
         }
     }

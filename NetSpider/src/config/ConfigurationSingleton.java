@@ -20,6 +20,7 @@ public class ConfigurationSingleton {
     private SCAN_TYPE ipScannerType; // Type of IP scan (FULL or PARTIAL)
     private String ipRange; // IP range to scan (e.g., 192.168.0)
     private int ipScannerSecondsInterval; // Number of seconds
+    private boolean debugMode; // Debug mode
 
     private String asciiArt = """
                         
@@ -60,6 +61,7 @@ public class ConfigurationSingleton {
         this.ipScannerType = SCAN_TYPE.FULL;
         this.ipRange = "192.168.1";
         this.ipScannerSecondsInterval = 60;
+        this.debugMode = true;
     }
 
 
@@ -136,5 +138,9 @@ public class ConfigurationSingleton {
 
     public int getIpScannerSecondsInterval() {
         return ipScannerSecondsInterval;
+    }
+
+    public boolean isDebugMode() {
+        return debugMode;
     }
 }

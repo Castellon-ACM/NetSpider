@@ -89,7 +89,19 @@ public class Equilibrator extends Thread implements Arguments {
         }
         return nodes;
     }
+    /**
+     * Method to import nodes to the process queue
+     * @param nodes ArrayList with nodes to be imported
+     */
     public static void importNodes(ArrayList<Node> nodes) {
         processQueue.addAll(nodes);
+    }
+
+    /**
+     * Method to add a processed node to the ProcessedQueue
+     * @param node node to be added
+     */
+    public static void addProcessedNode(Node node) {
+        ProcessedQueue.add(node);
     }
 }

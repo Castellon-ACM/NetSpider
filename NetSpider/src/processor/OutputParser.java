@@ -2,8 +2,12 @@ package processor;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Date;
+
+import Debug.DebugCenter;
 import entities.Node;
 import entities.Port;
+import equilibrator.Equilibrator;
 import storage.Storage;
 
 public class OutputParser extends Thread {
@@ -25,14 +29,12 @@ public class OutputParser extends Thread {
             try {
                 cProcess.waitFor(); // waits until the process finishes
                 Node nodeFromOutput = toNode(cProcess);
-                Storage.addNode(nodeFromOutput); // adds the node to the storage
+                Equilibrator.addProcessedNode(nodeFromOutput);
+                DebugCenter.debug("Node parsed from output: " + nodeFromOutput.getIp());
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
-
             
-
-
         }
     }
 
@@ -47,6 +49,7 @@ public class OutputParser extends Thread {
                     String serviceDescription = parts[2];
                     Port port = new Port(portNumber, serviceDescription);
                     node.addPort(port);
+                    node.setLastUpdate(new Date());
                 }
             }
         } catch (IOException e) {

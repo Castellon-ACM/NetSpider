@@ -1,4 +1,5 @@
 package equilibrator;
+import Debug.DebugCenter;
 import cpu.UtilsCpu;
 import java.io.IOException;
 import java.util.concurrent.Executors;
@@ -24,6 +25,7 @@ public class ProcessInstancer extends Thread {
             ProcessBuilder builder = Equilibrator.cProcesses.get(i);
             processBuilders.add(builder);
             i++;
+            DebugCenter.debug("Importing c process into ProcessInstancer ");
         }
         if (!processBuilders.isEmpty()) {
             Equilibrator.cProcesses.removeAll(processBuilders);
@@ -46,6 +48,7 @@ public class ProcessInstancer extends Thread {
             }
             if (processBuilders.isEmpty()) {
                 scheduler.shutdown();
+                DebugCenter.debug("All c processes started, shutting down process instancer... ");
             }
         }
     }
