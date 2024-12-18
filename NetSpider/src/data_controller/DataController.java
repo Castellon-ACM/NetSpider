@@ -13,14 +13,16 @@ import storage.Storage;
 public class DataController {
     static ScheduledExecutorService executor = Executors.newSingleThreadScheduledExecutor();
     private static final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
-
+    private static boolean running = true;
 
 
     public static void worker () {
         DebugCenter.debug("DataController is working");
         Storage.setLapsedNodes();
         DataController.importProcessedNodesIntoStorage();
-        DataController.exportLapsedNodesToEquilibrator();
+        if (running) {
+            DataController.exportLapsedNodesToEquilibrator();
+        }
     }
 
 
@@ -53,7 +55,15 @@ public class DataController {
     }
 
     public static void stopDataController() {
-        executor.shutdown();
+        try {
+            running = false;
+            while (!Equilibrator.ProcessedQueue.isEmpty()) {
+                Thread.sleep(1000);
+            }
+            executor.shutdown();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 

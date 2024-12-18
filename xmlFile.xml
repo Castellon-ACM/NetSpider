@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Node>
+    <ip>192.168.1.34</ip>
+    <OperativeSystem>LINUX</OperativeSystem>
+    <lapsed>false</lapsed>
+    <lastUpdate>2024-12-18T23:34:45.286+01:00</lastUpdate>
+    <Ports/>
+</Node>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Node>
+    <ip>192.168.1.12</ip>
+    <OperativeSystem>LINUX</OperativeSystem>
+    <lapsed>false</lapsed>
+    <lastUpdate>2024-12-18T23:34:45.838+01:00</lastUpdate>
+    <Ports>
+        <Port>
+            <portNumber>u</portNumber>
+            <serviceDescription>e</serviceDescription>
+        </Port>
+        <Port>
+            <portNumber>u</portNumber>
+            <serviceDescription>e</serviceDescription>
+        </Port>
+    </Ports>
+</Node>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Node>
+    <ip>192.168.1.10</ip>
+    <OperativeSystem>LINUX</OperativeSystem>
+    <lapsed>false</lapsed>
+    <lastUpdate>2024-12-18T23:34:46.168+01:00</lastUpdate>
+    <Ports>
+        <Port>
+            <portNumber>u</portNumber>
+            <serviceDescription>e</serviceDescription>
+        </Port>
+        <Port>
+            <portNumber>u</portNumber>
+            <serviceDescription>e</serviceDescription>
+        </Port>
+    </Ports>
+</Node>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Node>
+    <ip>192.168.1.13</ip>
+    <OperativeSystem>LINUX</OperativeSystem>
+    <lapsed>false</lapsed>
+    <lastUpdate>2024-12-18T23:34:46.484+01:00</lastUpdate>
+    <Ports>
+        <Port>
+            <portNumber>u</portNumber>
+            <serviceDescription>e</serviceDescription>
+        </Port>
+        <Port>
+            <portNumber>u</portNumber>
+            <serviceDescription>e</serviceDescription>
+        </Port>
+    </Ports>
+</Node>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Node>
+    <ip>192.168.1.137</ip>
+    <OperativeSystem>LINUX</OperativeSystem>
+    <lapsed>false</lapsed>
+    <lastUpdate>2024-12-18T23:34:46.917+01:00</lastUpdate>
+    <Ports/>
+</Node>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Node>
+    <ip>192.168.1.11</ip>
+    <OperativeSystem>LINUX</OperativeSystem>
+    <lapsed>false</lapsed>
+    <lastUpdate>2024-12-18T23:34:57.331+01:00</lastUpdate>
+    <Ports/>
+</Node>
+
+
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Node>
+    <ip>192.168.1.15</ip>
+    <OperativeSystem>LINUX</OperativeSystem>
+    <lapsed>false</lapsed>
+    <lastUpdate>2024-12-18T23:34:57.332+01:00</lastUpdate>
+    <Ports/>
+</Node>
+
+

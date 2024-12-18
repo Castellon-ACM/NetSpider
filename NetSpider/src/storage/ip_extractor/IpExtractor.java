@@ -4,7 +4,6 @@ import config.ConfigurationSingleton;
 import config.SCAN_TYPE;
 import entities.Node;
 import storage.Storage;
-
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;

@@ -1,8 +1,10 @@
 import Debug.DebugCenter;
 import config.ConfigurationSingleton;
 import data_controller.DataController;
+import entities.Node;
 import equilibrator.Equilibrator;
 import processor.Processor;
+import processor.ReportWriter;
 import storage.Storage;
 import storage.ip_extractor.IpExtractor;
 
@@ -20,9 +22,23 @@ public class Main {
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
             DebugCenter.debug("Shutdown hook started");
             ipExtractor.stopIpExtractor();
+            System.out.println("IP extractor stopped");
             Equilibrator.stopEquilibrator();
+            System.out.println("Equilibrator stopped");
             DataController.stopDataController();
-            Processor.writeResults(new ArrayList<>(Storage.getNodes()), new File("results.pdf"));  // Writes results to a file;
+            System.out.println("Data controller stopped");
+            ArrayList<Node> nodes = new ArrayList<>(Storage.getNodes());
+            for (Node node : nodes) {
+                System.out.println(node.getIp());
+            }
+            ReportWriter report = new ReportWriter(new ArrayList<>(nodes), new File("./xmlFile.xml"), new File("./report.pdf") );
+            report.start();
+            try {
+                report.join();
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
         })); // Shutdown hook to stop the threads when the JVM exits
 
     }

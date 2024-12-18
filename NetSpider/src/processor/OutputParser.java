@@ -30,8 +30,8 @@ public class OutputParser extends Thread {
     public void run() {
         if (cProcess != null) {
             try {
-                DebugCenter.debug("OutputParser waiting for process to finish... ");
                 cProcess.waitFor(); // waits until the process finishes
+                System.out.println("Process finished for: " + ip);
                 Node nodeFromOutput = toNode(cProcess);
                 Equilibrator.addProcessedNode(nodeFromOutput);
                 DebugCenter.debug("Node parsed from output: " + nodeFromOutput.getIp());

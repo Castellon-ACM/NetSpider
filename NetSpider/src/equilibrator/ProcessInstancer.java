@@ -57,13 +57,15 @@ public class ProcessInstancer extends Thread {
 
     /**
      * Starts a new c process and processes its output
-     * @param builder The ProcessBuilder for the Python process.
+     * @param builder The ProcessBuilder for the c process.
      */
     private void processInstancer(ProcessBuilder builder) {
         try {
             DebugCenter.debug("Starting new c process " + builder.command()  );
+
             Process process = builder.start();
-            new OutputParser(process).start();
+
+            new OutputParser(process, builder.command().get(1)).start();
         }
          catch (IOException e) {
             throw new RuntimeException(e);

@@ -11,7 +11,7 @@ import java.util.Date;
 
 
 @XmlRootElement(name = "Node")
-@XmlType(propOrder = {"ip", "nodeName", "operativeSystem", "lapsed", "lastUpdate", "ports"})
+@XmlType(propOrder = {"ip",  "operativeSystem", "lapsed", "lastUpdate", "ports"})
 public class Node {
 
     public enum OPERATIVE_SYSTEM {
