@@ -26,7 +26,7 @@ public class IpExtractor {
         SCAN_TYPE type = config.getIpScannerType();
         if (type == SCAN_TYPE.FULL) {
             initFullNetwork();
-        } else if (type == SCAN_TYPE.PARTIAL && config.getIpRange() == null) {
+        } else if (type == SCAN_TYPE.PARTIAL && config.getIpRange() != null) {
             initPartialNetwork();
         }
         scanAndStore(); // Starts scanning and storing IP addresses
