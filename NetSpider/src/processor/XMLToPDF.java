@@ -65,20 +65,12 @@ public class XMLToPDF {
      */
     private void addNodesContent(Document document, ArrayList<Node> nodes) {
         for (Node node : nodes) {
-            addNodeHeader(document, node);
             addNodeDetails(document, node);
             addPortsTable(document, node);
         }
     }
 
-    /**
-     * Method to add the node header
-     */
-    private void addNodeHeader(Document document, Node node) {
-        document.add(new Paragraph("Nodo: " + node.getNodeName())
-                .setFontSize(14)
-                .setFontColor(ColorConstants.DARK_GRAY));
-    }
+
 
     /**
      * Method to add the node details
