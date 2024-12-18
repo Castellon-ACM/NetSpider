@@ -48,7 +48,6 @@ public class ReportWriter extends Thread {
             marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
 
             for (Node node : nodes) {
-                System.out.println("parsing node " + node.toString() + "\n");
                 StringWriter stringWriter = new StringWriter();
                 marshaller.marshal(node, stringWriter);
 

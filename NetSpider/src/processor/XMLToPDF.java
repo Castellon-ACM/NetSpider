@@ -65,6 +65,7 @@ public class XMLToPDF {
      */
     private void addNodesContent(Document document, ArrayList<Node> nodes) {
         for (Node node : nodes) {
+
             addNodeDetails(document, node);
             addPortsTable(document, node);
         }

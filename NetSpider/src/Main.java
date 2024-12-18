@@ -28,13 +28,10 @@ public class Main {
             DataController.stopDataController();
             System.out.println("Data controller stopped");
             ArrayList<Node> nodes = new ArrayList<>(Storage.getNodes());
-            for (Node node : nodes) {
-                System.out.println(node.getIp());
-            }
-            ReportWriter report = new ReportWriter(new ArrayList<>(nodes), new File("./xmlFile.xml"), new File("./report.pdf") );
+            ReportWriter report = new ReportWriter(new ArrayList<>(nodes), new File("xmlFile.xml"), new File("report.pdf") );
             report.start();
             try {
-                report.join();
+                report.join(); // Wait for the report to finish
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
