@@ -45,8 +45,13 @@ public class Equilibrator extends Thread implements Arguments {
     }
 
     public static void stopEquilibrator() {
-        executorInstancers.shutdown();
-        equilibratorExecutor.shutdown();
+        try {
+            executorInstancers.awaitTermination(20, TimeUnit.SECONDS);
+            equilibratorExecutor.awaitTermination(20, TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
     @Override
