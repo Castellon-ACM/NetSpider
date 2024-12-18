@@ -30,7 +30,7 @@ public class ProcessInstancer extends Thread {
             // We use a scheduled executor to run the checkAndProcessBuilders method periodically
             // This ensures that the c processes are only started when the CPU load is below the maximum allowed value
             scheduler.scheduleAtFixedRate(this::checkAndProcessBuilders, 0,
-                    Configuration.getThreadSleepPythonInstancer(), TimeUnit.MILLISECONDS);
+                    Configuration.getThreadSleepCModuleInstancer(), TimeUnit.MILLISECONDS);
         }
     }
 

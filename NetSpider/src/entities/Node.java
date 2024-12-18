@@ -28,6 +28,13 @@ public class Node {
     public Node() {
     }
 
+    /**
+     * Constructor for creating a new node with a given IP address, node name, and operating system
+     * @param ip
+     * @param nodeName
+     * @param operativeSystem
+     * @param lastUpdate
+     */
     public Node(String ip, String nodeName, OPERATIVE_SYSTEM operativeSystem, Date lastUpdate) {
         this.ip = ip;
         this.nodeName = nodeName;
@@ -35,6 +42,23 @@ public class Node {
         this.lastUpdate = lastUpdate;
     }
 
+    /**
+     * Constructor for creating a new node with a given IP address
+     * @param ip
+     */
+    public Node(String ip) {
+        this.ip = ip;
+        this.nodeName = "Unknown";
+        this.operativeSystem = OPERATIVE_SYSTEM.LINUX;
+        updateLastProcessedTime();
+        this.ports = new ArrayList<>();
+        this.isLapsed = true; // If the node is newly created, it's considered lapsed
+
+    }
+
+    /**
+     * Updates the last processed time
+     */
     public void updateLastProcessedTime() {
         this.lastUpdate = Calendar.getInstance().getTime();
     }

@@ -2,6 +2,7 @@ package config;
 
 // CONFIGURACIÓN DEL PROYECTO
 
+
 public class ConfigurationSingleton {
 
     private static ConfigurationSingleton instance = null;
@@ -10,12 +11,15 @@ public class ConfigurationSingleton {
     private boolean verboseMode;
     private int processesVolume; // Number of processes that PythonProcessInstancer will get from the queue
     private double maxCpuLoad;
-    private int threadSleepPythonInstancer; // In milliseconds
+    private int threadSleepCModuleInstancer; // In milliseconds
     private int equilibratorThreads; // Thread pool size for Equilibrator (in MILISECONDS)
     private int PythonProcessInstancersThreads; // Thread pool size for PythonProcessInstancer
     private int equilibratorInterval; // Intervall in seconds between each equilibration process
     private int ipScannerTimeout; // Timeout in milliseconds
-
+    private int dataControllerPeriod; // Interval in seconds between each dataController execution
+    private SCAN_TYPE ipScannerType; // Type of IP scan (FULL or PARTIAL)
+    private String ipRange; // IP range to scan (e.g., 192.168.0)
+    private int ipScannerSecondsInterval; // Number of seconds
 
     private String asciiArt = """
                         
@@ -39,16 +43,23 @@ public class ConfigurationSingleton {
                         """;
 
 
+    public int getDataControllerPeriod() {
+        return dataControllerPeriod;
+    }
+
     private ConfigurationSingleton() {
         this.expirationTime = 50;
         this.verboseMode = true;
         this.processesVolume = 10;
         this.maxCpuLoad = 80;
-        this.threadSleepPythonInstancer = 1000;
-        this.threadSleepPythonInstancer = 3;
+        this.threadSleepCModuleInstancer = 1000;
         this.equilibratorThreads = 1;
         this.equilibratorInterval = 2000;
-        this.ipScannerTimeout = 100;
+        this.ipScannerTimeout = 20; // To increase the speed of the IP scanner, decrease this value
+        this.dataControllerPeriod = 10;
+        this.ipScannerType = SCAN_TYPE.FULL;
+        this.ipRange = "192.168.1";
+        this.ipScannerSecondsInterval = 60;
     }
 
 
@@ -57,6 +68,14 @@ public class ConfigurationSingleton {
             instance = new ConfigurationSingleton();
         }
         return instance;
+    }
+
+    public SCAN_TYPE getIpScannerType() {
+        return ipScannerType;
+    }
+
+    public String getIpRange() {
+        return ipRange;
     }
 
     public int getExpirationTime() {
@@ -95,8 +114,8 @@ public class ConfigurationSingleton {
         return maxCpuLoad;
     }
 
-    public int getThreadSleepPythonInstancer() {
-        return threadSleepPythonInstancer;
+    public int getThreadSleepCModuleInstancer() {
+        return threadSleepCModuleInstancer;
     }
 
     public int getPythonProcessInstancersThreads() {
@@ -113,5 +132,9 @@ public class ConfigurationSingleton {
 
     public int getIpScannerTimeout() {
         return ipScannerTimeout;
+    }
+
+    public int getIpScannerSecondsInterval() {
+        return ipScannerSecondsInterval;
     }
 }

@@ -56,7 +56,7 @@ public class Equilibrator extends Thread implements Arguments {
     }
 
     /**
-     * Clears the ProcessQueue and creates the pythonProcesses queue
+     * Clears the ProcessQueue and creates the cProcesses queue
      */
     private void clearAndPrepareQueue() {
         if (!processQueue.isEmpty()) {

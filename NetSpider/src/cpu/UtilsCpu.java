@@ -4,7 +4,7 @@ import com.sun.management.OperatingSystemMXBean;
 import java.lang.management.ManagementFactory;
 
 public class UtilsCpu {
-    private static OperatingSystemMXBean osBean = (OperatingSystemMXBean)  ManagementFactory.getOperatingSystemMXBean();
+    private static final OperatingSystemMXBean osBean = (OperatingSystemMXBean)  ManagementFactory.getOperatingSystemMXBean();
 
     /**
      * Returns the cpu load in real time

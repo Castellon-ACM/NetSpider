@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import entities.Node;
 import entities.Port;
+import storage.Storage;
 
 public class OutputParser extends Thread {
     private Process cProcess;
@@ -24,6 +25,7 @@ public class OutputParser extends Thread {
             try {
                 cProcess.waitFor(); // waits until the process finishes
                 Node nodeFromOutput = toNode(cProcess);
+                Storage.addNode(nodeFromOutput); // adds the node to the storage
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
