@@ -13,7 +13,7 @@ public class ConfigurationSingleton {
     private double maxCpuLoad;
     private int threadSleepCModuleInstancer; // In milliseconds
     private int equilibratorThreads; // Thread pool size for Equilibrator (in MILISECONDS)
-    private int PythonProcessInstancersThreads; // Thread pool size for PythonProcessInstancer
+    private int CProcessInstancersThreads; // Thread pool size for PythonProcessInstancer
     private int equilibratorInterval; // Intervall in seconds between each equilibration process
     private int ipScannerTimeout; // Timeout in milliseconds
     private int dataControllerPeriod; // Interval in seconds between each dataController execution
@@ -21,6 +21,7 @@ public class ConfigurationSingleton {
     private String ipRange; // IP range to scan (e.g., 192.168.0)
     private int ipScannerSecondsInterval; // Number of seconds
     private boolean debugMode; // Debug mode
+    private int shutdownTimeout; // Timeout in seconds for shutdown process
 
     private String asciiArt = """
                         
@@ -55,13 +56,15 @@ public class ConfigurationSingleton {
         this.maxCpuLoad = 80;
         this.threadSleepCModuleInstancer = 1000;
         this.equilibratorThreads = 1;
+        this.CProcessInstancersThreads = 1;
         this.equilibratorInterval = 2000;
         this.ipScannerTimeout = 20; // To increase the speed of the IP scanner, decrease this value
         this.dataControllerPeriod = 10;
-        this.ipScannerType = SCAN_TYPE.FULL;
+        this.ipScannerType = SCAN_TYPE.PARTIAL;
         this.ipRange = "192.168.1";
         this.ipScannerSecondsInterval = 60;
         this.debugMode = true;
+        this.shutdownTimeout = 5;
     }
 
 
@@ -120,8 +123,8 @@ public class ConfigurationSingleton {
         return threadSleepCModuleInstancer;
     }
 
-    public int getPythonProcessInstancersThreads() {
-        return PythonProcessInstancersThreads;
+    public int getCProcessInstancersThreads() {
+        return CProcessInstancersThreads;
     }
 
     public int getEquilibratorThreads() {
@@ -142,5 +145,9 @@ public class ConfigurationSingleton {
 
     public boolean isDebugMode() {
         return debugMode;
+    }
+
+    public int getShutdownTimeout() {
+        return shutdownTimeout;
     }
 }

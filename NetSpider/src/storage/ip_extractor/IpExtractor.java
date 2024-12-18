@@ -1,4 +1,5 @@
 package storage.ip_extractor;
+import Debug.DebugCenter;
 import config.ConfigurationSingleton;
 import config.SCAN_TYPE;
 import entities.Node;
@@ -35,7 +36,7 @@ public class IpExtractor {
         // Example: "192.168.0"
         String partialNetwork = config.getIpRange();
         networkSegments.add(partialNetwork);
-
+        DebugCenter.debug("Partial network scanning enabled: " + partialNetwork);
     }
 
     private void initFullNetwork() {
@@ -55,6 +56,7 @@ public class IpExtractor {
             for (int i = 1; i < 255; i++) {
                 String ipAddress = segment + "." + i;
                 if (isIpActive(ipAddress)) {
+                    DebugCenter.debug("Found active IP address: " + ipAddress);
                     activeIps.add(ipAddress);
                 }
             }
@@ -87,6 +89,7 @@ public class IpExtractor {
             nodes.add(new Node(activeIp));
         }
         Storage.addNodes(nodes);
+        DebugCenter.debug("Stored " + nodes.size() + " nodes from active IP addresses");
     }
 
     /**

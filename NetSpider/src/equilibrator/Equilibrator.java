@@ -8,6 +8,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import Debug.DebugCenter;
 import config.ConfigurationSingleton;
 import entities.Node;
 
@@ -36,7 +37,7 @@ public class Equilibrator extends Thread implements Arguments {
     // QUEUE OF PROCESSED NODES
     public static CopyOnWriteArrayList<Node> ProcessedQueue = new CopyOnWriteArrayList<>();
 
-    private static final ExecutorService executorInstancers = Executors.newFixedThreadPool(CONFIG.getPythonProcessInstancersThreads());
+    private static final ExecutorService executorInstancers = Executors.newFixedThreadPool(CONFIG.getCProcessInstancersThreads());
     private static ScheduledExecutorService equilibratorExecutor = Executors.newScheduledThreadPool(CONFIG.getEquilibratorThreads());
 
     public static void startEquilibrator() {
@@ -46,8 +47,8 @@ public class Equilibrator extends Thread implements Arguments {
 
     public static void stopEquilibrator() {
         try {
-            executorInstancers.awaitTermination(20, TimeUnit.SECONDS);
-            equilibratorExecutor.awaitTermination(20, TimeUnit.SECONDS);
+            executorInstancers.awaitTermination(CONFIG.getShutdownTimeout(), TimeUnit.SECONDS);
+            equilibratorExecutor.awaitTermination(CONFIG.getShutdownTimeout(), TimeUnit.SECONDS);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -66,6 +67,7 @@ public class Equilibrator extends Thread implements Arguments {
     private void clearAndPrepareQueue() {
         if (!processQueue.isEmpty()) {
             for (Node node : processQueue) {
+                DebugCenter.debug("Adding process to cProcesses queue in equilibrator: " + node.getIp());
                 String currentArguments = (CONFIG.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
                 cProcesses.add(new ProcessBuilder("", cScript.getAbsolutePath(),
                         node.getIp(), currentArguments));
@@ -74,10 +76,12 @@ public class Equilibrator extends Thread implements Arguments {
         }
     }
     /**
-     * Method to start PythonProcessInstancer if there are processes in the queue
+     * Method to start ProcessInstancer if there are processes in the queue
      */
     private void startInstacers() {
+        DebugCenter.debug("Attempting to start new process instancer ");
         if (!cProcesses.isEmpty() && cProcesses.size() > CONFIG.getProcessesVolume()) {
+            DebugCenter.debug("Starting new process instancer... ");
             executorInstancers.execute(new ProcessInstancer());
         }
     }
