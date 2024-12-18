@@ -62,7 +62,7 @@ public class ConfigurationSingleton {
         this.dataControllerPeriod = 10; // In seconds
         this.ipScannerType = SCAN_TYPE.PARTIAL;
         this.ipRange = "192.168.1";
-        this.ipScannerSecondsInterval = 60;
+        this.ipScannerSecondsInterval = 150;
         this.debugMode = true;
         this.shutdownTimeout = 5;
     }

@@ -1,3 +1,4 @@
+import Debug.DebugCenter;
 import config.ConfigurationSingleton;
 import data_controller.DataController;
 import equilibrator.Equilibrator;
@@ -17,6 +18,7 @@ public class Main {
         IpExtractor ipExtractor = new IpExtractor(); // Starts automatically
         Equilibrator.startEquilibrator();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            DebugCenter.debug("Shutdown hook started");
             ipExtractor.stopIpExtractor();
             Equilibrator.stopEquilibrator();
             DataController.stopDataController();

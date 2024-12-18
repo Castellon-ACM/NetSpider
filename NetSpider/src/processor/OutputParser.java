@@ -8,7 +8,7 @@ import Debug.DebugCenter;
 import entities.Node;
 import entities.Port;
 import equilibrator.Equilibrator;
-import storage.Storage;
+
 
 public class OutputParser extends Thread {
     private Process cProcess;
@@ -25,8 +25,10 @@ public class OutputParser extends Thread {
 
     @Override
     public void run() {
+        DebugCenter.debug("OutputParser started for process, is alive? : " + cProcess.isAlive());
         if (cProcess != null) {
             try {
+                DebugCenter.debug("OutputParser waiting for process to finish... ");
                 cProcess.waitFor(); // waits until the process finishes
                 Node nodeFromOutput = toNode(cProcess);
                 Equilibrator.addProcessedNode(nodeFromOutput);

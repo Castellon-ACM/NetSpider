@@ -42,7 +42,6 @@ public class DataController {
     private static void exportLapsedNodesToEquilibrator() {
         // Saves the lapsed nodes to the equilibrator
         ArrayList<Node> lapsedNodes = Storage.getLapsedNodes();
-        DebugCenter.debug("LAPSED NODES: " + lapsedNodes.size());
         if (lapsedNodes != null && !lapsedNodes.isEmpty()) {
             DebugCenter.debug("EXPORTING LAPSED NODES TO EQUILIBRATOR: " + lapsedNodes.size() + " NODES");
             Equilibrator.importNodes(lapsedNodes);

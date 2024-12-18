@@ -40,16 +40,18 @@ public class ProcessInstancer extends Thread {
      * Checks the CPU load and starts new processes if the load is below the maximum allowed value
      */
     private void checkAndProcessBuilders() {
+        DebugCenter.debug("Checking CPU load... " + UtilsCpu.getCpuLoad() + " / " + Configuration.getMaxCpuLoad()  + " %"  );
         if (UtilsCpu.getCpuLoad() <= Configuration.getMaxCpuLoad()) {
-            while (UtilsCpu.getCpuLoad() <= Configuration.getMaxCpuLoad()) {
+            while (UtilsCpu.getCpuLoad() <= Configuration.getMaxCpuLoad() && !processBuilders.isEmpty()  ) {
                 ProcessBuilder builder = processBuilders.getLast();
                 processInstancer(builder);
+
                 processBuilders.remove(builder);
             }
-            if (processBuilders.isEmpty()) {
-                scheduler.shutdown();
-                DebugCenter.debug("All c processes started, shutting down process instancer... ");
-            }
+        }
+        if (processBuilders.isEmpty()) {
+            scheduler.shutdown();
+            DebugCenter.debug("All c processes started, shutting down process instancer... ");
         }
     }
 
@@ -59,6 +61,7 @@ public class ProcessInstancer extends Thread {
      */
     private void processInstancer(ProcessBuilder builder) {
         try {
+            DebugCenter.debug("Starting new c process " + builder.command()  );
             Process process = builder.start();
             new OutputParser(process).start();
         }
