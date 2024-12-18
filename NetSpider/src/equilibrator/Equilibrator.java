@@ -41,8 +41,9 @@ public class Equilibrator extends Thread implements Arguments {
     private static ScheduledExecutorService equilibratorExecutor = Executors.newScheduledThreadPool(CONFIG.getEquilibratorThreads());
 
     public static void startEquilibrator() {
+        DebugCenter.debug("Starting Equilibrator...");
         equilibratorExecutor.scheduleAtFixedRate(new Equilibrator(), 0,
-                CONFIG.getEquilibratorInterval(), TimeUnit.MILLISECONDS);
+                CONFIG.getEquilibratorInterval(), TimeUnit.SECONDS);
     }
 
     public static void stopEquilibrator() {
@@ -80,7 +81,7 @@ public class Equilibrator extends Thread implements Arguments {
      */
     private void startInstacers() {
         DebugCenter.debug("Attempting to start new process instancer ");
-        if (!cProcesses.isEmpty() && cProcesses.size() > CONFIG.getProcessesVolume()) {
+        if (!cProcesses.isEmpty()) {
             DebugCenter.debug("Starting new process instancer... ");
             executorInstancers.execute(new ProcessInstancer());
         }
@@ -91,9 +92,8 @@ public class Equilibrator extends Thread implements Arguments {
      * @return ArrayList with processed nodes
      */
     public static ArrayList<Node> clearAndExport() {
-        ArrayList<Node> nodes = null;
+        ArrayList<Node> nodes = new ArrayList<>(ProcessedQueue);
         if (!ProcessedQueue.isEmpty()) {
-            nodes = new ArrayList<>(ProcessedQueue);
             ProcessedQueue.clear();
         }
         return nodes;

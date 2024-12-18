@@ -23,6 +23,7 @@ public class Storage  {
         for (Node node : nodes) {
             if (node.isLapsed()) lapsedNodes.add(node);
         }
+        nodes.removeAll(lapsedNodes);
         return lapsedNodes;
     }
 

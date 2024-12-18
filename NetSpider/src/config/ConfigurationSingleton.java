@@ -57,9 +57,9 @@ public class ConfigurationSingleton {
         this.threadSleepCModuleInstancer = 1000;
         this.equilibratorThreads = 1;
         this.CProcessInstancersThreads = 1;
-        this.equilibratorInterval = 2000;
-        this.ipScannerTimeout = 20; // To increase the speed of the IP scanner, decrease this value
-        this.dataControllerPeriod = 10;
+        this.equilibratorInterval = 10; // Equilibrator interval in seconds
+        this.ipScannerTimeout = 30; // To increase the speed of the IP scanner, decrease this value
+        this.dataControllerPeriod = 10; // In seconds
         this.ipScannerType = SCAN_TYPE.PARTIAL;
         this.ipRange = "192.168.1";
         this.ipScannerSecondsInterval = 60;
@@ -84,7 +84,7 @@ public class ConfigurationSingleton {
     }
 
     public int getExpirationTime() {
-        return expirationTime;
+        return expirationTime * 1000;
     }
 
     public void setExpirationTime(int expirationTime) {

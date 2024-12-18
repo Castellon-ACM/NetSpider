@@ -102,6 +102,10 @@ public class IpExtractor {
         }, 0, config.getIpScannerSecondsInterval(), TimeUnit.SECONDS);
     }
     public void stopIpExtractor() {
-        executor.shutdown();
+        try {
+            executor.awaitTermination(config.getShutdownTimeout(), TimeUnit.SECONDS);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
