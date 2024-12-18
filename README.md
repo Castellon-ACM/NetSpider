@@ -30,7 +30,27 @@ NetSpider is a high-performance network scanner that continuously monitors the n
 - **Java:** ☕ Main program for control the scanning process, managing threads, and generating PDF reports.  
 
 - **C++:** 🛠️ High-speed module for port scanning and service detection.
-  
+  copyOnWriteArrayList: 📋 A thread-safe variant of ArrayList in Java that allows safe concurrent access and modification. It ensures that multiple threads can read from and modify the list without encountering concurrency issues, making it ideal for multithreaded environments.
+
+- **Equilibrator Class:** 🏗️ The Equilibrator class utilizes CopyOnWriteArrayList to manage concurrent access to various queues containing Node objects and ProcessBuilder instances. This ensures thread safety when multiple threads are processing nodes and managing processes simultaneously.
+
+**Functionality of CopyOnWriteArrayList in the Equilibrator Class:**
+The Equilibrator class uses CopyOnWriteArrayList to handle several queues that are accessed and modified by multiple threads concurrently. This ensures that operations on the lists do not interfere with each other, even when threads are adding or removing elements simultaneously.
+
+Key Methods in Equilibrator Using CopyOnWriteArrayList:
+
+- **clearAndPrepareQueue():**
+
+Description: This method clears the processQueue and adds new processes (instances of ProcessBuilder) to cProcesses. It uses CopyOnWriteArrayList to ensure that adding to cProcesses is done safely, without interference from other threads.  
+
+- **clearAndExport():**
+
+Description: This method exports processed nodes from ProcessedQueue into an ArrayList and then clears the ProcessedQueue. By using CopyOnWriteArrayList, it ensures safe access and modification of ProcessedQueue, even when other threads are working with the list.
+
+- **importNodes():**
+
+Description: This method imports nodes into the processQueue. Thanks to CopyOnWriteArrayList, concurrent access to the list is safe, allowing nodes to be added without worrying about race conditions or interference from other threads.
+
 <div align="center">
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original-wordmark.svg" alt="Java Logo" width="50"/> <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg" alt="C++ Logo" width="50"/>
 </div>
