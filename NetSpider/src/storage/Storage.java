@@ -70,4 +70,8 @@ public class Storage  {
             nodes.add(newNode);
         }
     }
+
+    public static CopyOnWriteArrayList<Node> getNodes() {
+        return nodes;
+    }
 }

@@ -1,7 +1,12 @@
 import config.ConfigurationSingleton;
 import data_controller.DataController;
 import equilibrator.Equilibrator;
+import processor.Processor;
+import storage.Storage;
 import storage.ip_extractor.IpExtractor;
+
+import java.io.File;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -15,7 +20,7 @@ public class Main {
            ipExtractor.stopIpExtractor();
            Equilibrator.stopEquilibrator();
            DataController.stopDataController();
-           // TODO: GENERATE THE PDF FILE
+            Processor.writeResults(new ArrayList<>(Storage.getNodes()), new File("results.pdf"));  // Writes results to a file);
         })); // Shutdown hook to stop the threads when the JVM exits
 
     }
