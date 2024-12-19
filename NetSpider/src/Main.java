@@ -28,12 +28,6 @@ public class Main {
             System.out.println("Data controller stopped");
 
             ArrayList<Node> nodes = new ArrayList<>(Storage.getNodes());
-
-
-            System.out.println(nodes.size() + " nodes found");
-
-            
-
             ReportWriter report = new ReportWriter(new ArrayList<>(nodes));
 
             report.start();
