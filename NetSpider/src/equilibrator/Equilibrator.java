@@ -27,7 +27,7 @@ public class Equilibrator extends Thread implements Arguments {
     private static final ConfigurationSingleton CONFIG = ConfigurationSingleton.getInstance();
 
     // "c_modules/extraktorLINUX"
-    protected static final File cScript = new File("/home/kaos/Projects/java/netspider/NetSpider/src/equilibrator/c_modules/extractorLINUX.out");
+    protected static final File cScript = new File("/Users/felixcaba/Documents/Proyectos/NetSpider/NetSpider/NetSpider/src/equilibrator/c_modules/extraktorMACOS");
 
     // PROCESSES ARRAYLIST
     public static CopyOnWriteArrayList<ProcessBuilder> cProcesses = new CopyOnWriteArrayList<>();
@@ -66,11 +66,16 @@ public class Equilibrator extends Thread implements Arguments {
     /**
      * Clears the ProcessQueue and creates the cProcesses queue
      */
+
     private void clearAndPrepareQueue() {
         if (!processQueue.isEmpty()) {
             for (Node node : processQueue) {
                 DebugCenter.debug("Adding process to cProcesses queue in equilibrator: " + node.getIp());
                 String currentArguments = (CONFIG.isVerboseMode()) ? Arguments.VERBOSE : Arguments.QUIET;
+
+                System.out.println(Paths.get(cScript.getAbsolutePath()));
+                System.out.println(node.getIp());
+
                 cProcesses.add(new ProcessBuilder( cScript.getAbsolutePath(),
                         node.getIp(), currentArguments));
             }
@@ -82,9 +87,11 @@ public class Equilibrator extends Thread implements Arguments {
      */
     private void startInstacers() {
         DebugCenter.debug("Attempting to start new process instancer ");
+
         if (!cProcesses.isEmpty()) {
             DebugCenter.debug("Starting new process instancer... ");
             executorInstancers.execute(new ProcessInstancer());
+
         }
     }
    

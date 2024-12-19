@@ -3,7 +3,6 @@ import config.ConfigurationSingleton;
 import data_controller.DataController;
 import entities.Node;
 import equilibrator.Equilibrator;
-import processor.Processor;
 import processor.ReportWriter;
 import storage.Storage;
 import storage.ip_extractor.IpExtractor;
@@ -27,8 +26,16 @@ public class Main {
             System.out.println("Equilibrator stopped");
             DataController.stopDataController();
             System.out.println("Data controller stopped");
+
             ArrayList<Node> nodes = new ArrayList<>(Storage.getNodes());
-            ReportWriter report = new ReportWriter(new ArrayList<>(nodes), new File("xmlFile.xml"), new File("report.pdf") );
+
+
+            System.out.println(nodes.size() + " nodes found");
+
+            
+
+            ReportWriter report = new ReportWriter(new ArrayList<>(nodes));
+
             report.start();
             try {
                 report.join(); // Wait for the report to finish

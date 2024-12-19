@@ -17,19 +17,8 @@
 
 
 	<dependencies>
-		<!-- Jakarta XML Bind API -->
-		<dependency>
-			<groupId>jakarta.xml.bind</groupId>
-			<artifactId>jakarta.xml.bind-api</artifactId>
-			<version>4.0.0</version> <!-- Asegúrate de que sea la última versión compatible -->
-		</dependency>
 
-		<!-- Implementación de JAXB (lo que falta actualmente) -->
-		<dependency>
-			<groupId>org.glassfish.jaxb</groupId>
-			<artifactId>jaxb-runtime</artifactId>
-			<version>4.0.0</version> <!-- O la última versión disponible -->
-		</dependency>
+
 
 		<!-- iText (Si estás generando PDFs) -->
 		<dependency>
@@ -55,6 +44,21 @@
 			<artifactId>jakarta.ejb-api</artifactId>
 			<version>4.0.1</version>
 		</dependency>
+
+
+		<dependency>
+			<groupId>jakarta.xml.bind</groupId>
+			<artifactId>jakarta.xml.bind-api</artifactId>
+			<version>4.0.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.sun.xml.bind</groupId>
+			<artifactId>jaxb-impl</artifactId>
+			<version>4.0.5</version>
+			<scope>runtime</scope>
+		</dependency>
+
 	</dependencies>
 
 

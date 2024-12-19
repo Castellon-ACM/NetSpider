@@ -8,6 +8,7 @@ import java.util.ArrayList;
  *
  * @author usuario
  */
+
 @XmlRootElement(name = "Nodes")
 public class NodeList {
     private ArrayList<Node> nodes = new ArrayList<>();
@@ -19,5 +20,9 @@ public class NodeList {
 
     public void setNodes(ArrayList<Node> nodes) {
         this.nodes = nodes;
+    }
+
+    public void addNode(Node node) {
+        this.nodes.add(node);
     }
 }

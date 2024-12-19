@@ -23,6 +23,8 @@ public class ConfigurationSingleton {
     private boolean debugMode; // Debug mode
     private int shutdownTimeout; // Timeout in seconds for shutdown process
 
+    private final String exportPath = "export/";
+
     private String asciiArt = """
                         
                          ⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⡖⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀
@@ -61,10 +63,11 @@ public class ConfigurationSingleton {
         this.ipScannerTimeout = 30; // To increase the speed of the IP scanner, decrease this value
         this.dataControllerPeriod = 10; // In seconds
         this.ipScannerType = SCAN_TYPE.PARTIAL;
-        this.ipRange = "192.168.1";
+        this.ipRange = "192.168.8";
         this.ipScannerSecondsInterval = 150;
         this.debugMode = true;
         this.shutdownTimeout = 5;
+
     }
 
 
@@ -149,5 +152,9 @@ public class ConfigurationSingleton {
 
     public int getShutdownTimeout() {
         return shutdownTimeout;
+    }
+
+    public String getExportPath() {
+        return exportPath;
     }
 }
